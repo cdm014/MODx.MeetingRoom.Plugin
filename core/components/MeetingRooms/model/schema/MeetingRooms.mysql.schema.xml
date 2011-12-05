@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="MeetingRooms" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM"  phpdoc-package="MeetingRooms" phpdoc-subpackage="model" version="1.1">
+	<object class="mrRooms" table="mr_rooms" extends="XPDOSimpleObject">
+		<field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="address" dbtype="tinytext" phptype="string" null="false" default="" />
+		
+		<index alias="name" name="name" primary="false" unique="false" type="BTREE">
+			<column key="name" length="" collation="A" null="false" />
+		</index>
+		<alias key="room" field="name" />
+		<alias key="roomname" field="name" />
+		
+		<composite alias="Requests" class="mrRequests" local="id" foreign="room" cardinality="many" owner="local" />
+		<composite alias="Resources" class="mrResources" local="id" foreign="room" cardinality="many" owner="local" />
+	</object>
+	<object class="mrResources" table="mr_resources" extends="XPDOSimpleObject">
+		<field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="max_amount" dbtype="int" precision="1" attributes="unsigned" phptype="integer" null="false" default="1" />
+		<field key="room" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+		
+		<index alias="resourceByRoom" name="resourceByRoom" primary="false" unique="true" type="BTREE">
+			<column key="name" length="255" collation="A" null="false" />
+			<column key="room" collation="A" null="false" />
+		</index>
+		<index alias="room" name="room" primary="false" unique="false" type="BTREE">
+			<column key="room" collation="A" null="false" />
+		</index>
+		<aggregate alias="Room" class="mrRooms" local="room" foreign="id" cardinality="one" owner="foreign" />
+		<composite alias="RequestedResources" class="mrRequestedResource" local="id" foreign="resource" cardinality="many" owner="local" />
+	</object>
+	<object class="mrRequests" table="mr_requests" extends="XPDOSimpleObject">
+		<field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="libraryCard" dbtype="varchar" precision="14" phptype="string" null="false" default="" />
+		<field key="email" dbtype="varchar" precision="255" phptype="string" null="true" default="" />
+		<field key="phone" dbtype="varchar" precision="14" phptype="string" null="false" default="" />
+		<field key="group" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="meetingType" dbtype="tinytext" phptype="string" null="false" default="" />
+		<field key="start" dbtype="datetime" phptype="datetime" null="false"  />
+		<field key="end" dbtype="datetime" phptype="datetime" null="false" />
+		<field key="requestNumber" dbtype="varchar" precision="30" phptype="string" null="false" default="" />
+		<field key="room" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+		
+		<index alias="libraryCard" name="libraryCard" primary="false" unique="false" type="BTREE">
+			<column key="libraryCard" collation="A" null="false" />
+		</index>
+		<index alias="room" name="room" primary="false" unique="false" type="BTREE">
+			<column key="room" collation="A" null="false" />
+		</index>
+		<index alias="start" name="start" primary="false" unique="false" type="BTREE">
+			<column key="start" collation="A" null="false" />
+		</index>
+		<index alias="requestNumber" name="requestNumber" primary="false" unique="false" type="BTREE">
+			<column key="requestNumber" collation="A" null="false" />
+		</index>
+		<aggregate alias="Room" class="mrRooms" local="room" foreign="id" cardinality="one" owner="foreign" />
+		<composite alias="ResourceRequest" class="mrRequestedResource" local="id" foreign="request" cardinality="many" owner="local" />
+	</object>
+	<object class="mrRequestedResource" table="mr_requestedresources" extends="XPDOSimpleObject">
+		<field key="request" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+		<field key="resource" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+		<field key="amount" dbtype="int" precision="1" attributes="unsigned" phptype="integer" null="false" default="0" />
+		
+		<index alias="request" name="request" primary="false" unique="false" type="BTREE">
+			<column key="request" collation="A" null="false" />
+		</index>
+		<index alias="resource" name="resource" primary="false" unique="false" type="BTREE">
+			<column key="resource" collation="A" null="false" />
+		</index>
+		<aggregate alias="Request" class="mrRequests" local="request" foreign="id" cardinality="one" owner="foreign" />
+		<aggregate alias="Resource" class="mrResources" local="resource" foreign="id" cardinality="one" owner="foreign" />
+	</object>
+</model>

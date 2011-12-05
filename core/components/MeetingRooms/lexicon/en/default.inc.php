@@ -1,0 +1,25 @@
+<?php
+$_lang['MeetingRoom'] = 'Meeting Room';
+$_lang['MeetingRooms'] = 'Meeting Rooms';
+$_lang['MeetingRooms.desc'] = 'Meeting Room Management System';
+$_lang['MeetingRooms.room'] = 'Meeting Room';
+$_lang['MeetingRooms.resource'] = 'Resource';
+$_lang['MeetingRooms.management'] = 'Meeting Room Managment System';
+$_lang['MeetingRooms.management_desc'] = 'Meeting Rooms';
+$_lang['MeetingRooms.address']='Meeting Room Location';
+$_lang['MeetingRooms.name'] = 'Meeting Room';
+$_lang['MeetingRooms.search...'] = 'Search...';
+$_lang['MeetingRooms.room_update'] = 'Update Room Information';
+$_lang['MeetingRooms.room_remove'] = 'Remove Meeting Room from list';
+$_lang['MeetingRooms.room_err_ns'] = 'Error: Room Not Specified';
+$_lang['MeetingRooms.room_err_nf'] = 'Room Not Found';
+$_lang['MeetingRooms.room_err_save'] = 'An Error occured while trying to save the room information';
+$_lang['MeetingRooms.room_create'] = 'Add a new Meeting Room';
+$_lang['MeetingRooms.resources'] = 'Resources';
+$_lang['MeetingRooms.rooms'] = 'Meeting Rooms';
+$_lang['MeetingRooms.resource_name'] = 'Resource';
+$_lang['MeetingRooms.resource_maxAmount'] = 'Maximum amount available';
+$_lang['MeetingRooms.resource_create'] = 'Add a new Resource to a room';
+$_lang['MeetingRooms.resource_err_ae'] = 'A resource for this room with that name already exists';
+$_lang['MeetingRooms.resource_update'] = 'Update Resource Information';
+$_lang['MeetingRooms.resource_remove'] = 'Remove Resource from system';
