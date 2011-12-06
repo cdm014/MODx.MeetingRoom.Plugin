@@ -4,7 +4,7 @@ MeetingRooms.grid.Resources = function(config) {
 		id: 'MeetingRooms-grid-Resources'
 		,url: MeetingRooms.config.connectorUrl
 		,baseParams: { action: 'mgr/mrResources/getList'}
-		,fields: ['id', 'name', 'address', 'menu']
+		,fields: ['id', 'name', 'max_amount','room_name', 'menu']
 		,paging: true
 		,remoteSort: true
 		,anchor: '97%'

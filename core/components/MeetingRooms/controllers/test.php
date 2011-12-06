@@ -3,54 +3,38 @@ require_once dirname(dirname(__FILE__)).'/model/MeetingRooms/mrmanager.class.php
 $mrManager = new mrManager($modx);
 $modx->setLogLevel(modX::LOG_LEVEL_DEBUG);
 $modx->setLogTarget(XPDO_CLI_MODE ? 'ECHO' : 'HTML');
-//config data
-/*
-$scriptProperties = array();
-$isLimit = !empty($scriptProperties['limit']);
+$output = "Test";
+$mybasePath = 'c:/inetpub/wwwroot/test_site/';
+$myPath = 'MeetingRooms/core/components/MeetingRooms/';
+$processorPath = $myPath.'processors/';
+$mgrPath = $processorPath.'mgr/';
+$mrRoomsPath = $mgrPath.'mrRooms/';
+$mrResourcesPath = $mgrPath.'mrResources/';
+$mrRoomsGetListPath = $mrRoomsPath.'getlist';
+$mrResourceGetListPath = $mrResourcesPath.'getlist';
+$tests = array();
+$tests['mrRoomsGetListPath'] = $mybasePath.$mrRoomsGetListPath;
+$tests['rooms getlist'] = file_exists($mybasePath.$mrRoomsGetListPath.'.php');
+$tests['mrResourceGetListPath'] = $mybasePath.$mrResourceGetListPath.'.php';
+$tests['resources getlist'] = file_exists($mybasePath.$mrResourceGetListPath.'.php');
 
+$scriptProperties = array();
+//$scriptProperties['query'] = 'test1';
+
+
+$isLimit = !empty($scriptProperties['limit']);
 $start = $modx->getOption('start',$scriptProperties,0);
 $limit = $modx->getOption('limit',$scriptProperties,10);
-$sort = $modx->getOption('sort',$scriptProperties,'name');
+$sort = $modx->getOption('sort',$scriptProperties,'resourceByRoom');
 $dir = $modx->getOption('dir',$scriptProperties,'ASC');
 $query = $modx->getOption('query',$scriptProperties,'');
-*/
-$sort = 'name';
-$dir = 'ASC';
-$isLimit = false;
-
-$query = 'test1';
-$output = "<p>query: $query</p>";
-//create the query
+$query = 'resource one';
+$tests['query'] = $query;
+$qstring = '%'.$query.'%';
+$tests['qstring'] = $qstring;
 $c = $modx->newQuery('mrResources');
+$c->innerJoin('mrRooms','Room');
 
-//if we have a search string search our room names too
-if (!empty($query)){
-	$qstring = '%'.$query.'%';
-	$output .= "<p>qstring: $qstring</p>";
-	$c->innerJoin('mrRooms','Room');
-	$c->where(array(
-		'name:LIKE' => $qstring
-		,'OR:Room.name:LIKE' => $qstring
-	));
-}
-/*
-$c->sortby($sort,$dir);
-if ($isLimit) $c->limit($limit,$start);
-*/
-$count = $modx->getCount('mrResources',$c);
-$output .= "<p>count: $count</p>";
-//get our iterator
-$resources = $modx->getIterator('mrResources', $c);
-//$list = array();
-$output .= $c->toSQL()."Test.<pre>";
-foreach ($resources as $resource) {
-	$resourceArray = $resource->toArray();
-	$room = $modx->getObject('mrRooms',$resourceArray['room']);
-	$resourceArray['room_name'] = $room->get('name');
-	$output .= print_r($resourceArray, true);
-	//$list[] = $resourceArray;
 
-}
-//$output .= print_r($list,true);
-$output .= "</pre>";
+$output .= "<pre>".print_r($tests,true)."</pre>";
 return $output;
