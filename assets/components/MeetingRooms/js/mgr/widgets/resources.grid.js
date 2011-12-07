@@ -106,6 +106,7 @@ Ext.reg('MeetingRooms-grid-Resources',MeetingRooms.grid.Resources);
 
 MeetingRooms.window.UpdateResource = function(config) {
     config = config || {};
+	this.config = config;
     Ext.applyIf(config,{
         title: _('MeetingRooms.resource_update')
         ,url: MeetingRooms.config.connectorUrl
@@ -132,7 +133,12 @@ MeetingRooms.window.UpdateResource = function(config) {
 			,resizable: false
 			,fieldLabel: _('MeetingRooms.name')
 			,name: 'roomName'
+			,forceSelection: true
 			,hiddenName: 'room'
+			,hiddenValue: 1
+			,hiddenId: 'room'
+			,value: 1
+			
 		}]
 		
     });
