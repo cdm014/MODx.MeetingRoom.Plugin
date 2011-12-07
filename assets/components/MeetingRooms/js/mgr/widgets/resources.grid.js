@@ -127,17 +127,7 @@ MeetingRooms.window.UpdateResource = function(config) {
             ,name: 'max_amount'
             ,width: 100
         },{
-			xtype: 'modx-combo'
-			,url: MeetingRooms.config.connectorUrl
-			,baseParams: { action: 'mgr/mrRooms/getlist' }
-			,resizable: false
-			,fieldLabel: _('MeetingRooms.name')
-			,name: 'roomName'
-			,forceSelection: true
-			,hiddenName: 'room'
-			,hiddenValue: 1
-			,hiddenId: 'room'
-			,value: 1
+			xtype: 'MeetingRooms-combo-mrRooms'
 			
 		}]
 		
