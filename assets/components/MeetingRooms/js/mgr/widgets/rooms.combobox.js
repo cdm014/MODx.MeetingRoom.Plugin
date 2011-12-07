@@ -1,5 +1,5 @@
 MeetingRooms.combo.mrRooms = function(config) {
-	config = config || {}
+	config = config || {};
 	Ext.applyIf(config,{
 		url: MeetingRooms.config.connectorUrl
 		,baseParams: { action: 'mgr/mrRooms/getlist' }

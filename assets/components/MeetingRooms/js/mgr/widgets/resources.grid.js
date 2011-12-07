@@ -4,7 +4,7 @@ MeetingRooms.grid.Resources = function(config) {
 		id: 'MeetingRooms-grid-Resources'
 		,url: MeetingRooms.config.connectorUrl
 		,baseParams: { action: 'mgr/mrResources/getList'}
-		,fields: ['id', 'name', 'max_amount','room_name', 'menu']
+		,fields: ['id', 'name', 'max_amount','room_name','room', 'menu']
 		,paging: true
 		,remoteSort: true
 		,anchor: '97%'
@@ -15,7 +15,7 @@ MeetingRooms.grid.Resources = function(config) {
 			,sortable: true
 			,width: 60
 		},{
-			header: _('MeetingRooms.resouce_name')
+			header: _('MeetingRooms.resource_name')
 			,dataIndex: 'name'
 			,sortable: true
 			,width: 100
@@ -107,8 +107,10 @@ Ext.reg('MeetingRooms-grid-Resources',MeetingRooms.grid.Resources);
 MeetingRooms.window.UpdateResource = function(config) {
     config = config || {};
 	this.config = config;
+	textvar = '<pre>'+this.config+'</pre>';
     Ext.applyIf(config,{
         title: _('MeetingRooms.resource_update')
+		,text: textvar
         ,url: MeetingRooms.config.connectorUrl
         ,baseParams: {
             action: 'mgr/mrResources/update'
@@ -128,6 +130,7 @@ MeetingRooms.window.UpdateResource = function(config) {
             ,width: 100
         },{
 			xtype: 'MeetingRooms-combo-mrRooms'
+			,value: this.config.record.room
 			
 		}]
 		
