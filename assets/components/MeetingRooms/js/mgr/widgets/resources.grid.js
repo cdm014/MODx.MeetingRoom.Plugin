@@ -35,7 +35,7 @@ MeetingRooms.grid.Resources = function(config) {
 			,handler: {xtype: 'MeetingRooms-window-resource-create',blankValues: true}
 		},{
 			xtype: 'textfield'
-			,id: 'MeetingRooms-search-filter'
+			,id: 'Resources-search-filter'
 			,emptyText: _('MeetingRooms.search...')
 			,listeners: {
 				'change': {fn: this.search,scope:this}
