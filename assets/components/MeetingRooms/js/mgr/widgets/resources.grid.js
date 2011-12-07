@@ -31,6 +31,9 @@ MeetingRooms.grid.Resources = function(config) {
 			,width: 60
 		}]
 		,tbar: [{
+			text: _('MeetingRooms.resource_create')
+			,handler: {xtype: 'MeetingRooms-window-resource-create',blankValues: true}
+		},{
 			xtype: 'textfield'
 			,id: 'MeetingRooms-search-filter'
 			,emptyText: _('MeetingRooms.search...')
@@ -48,13 +51,17 @@ MeetingRooms.grid.Resources = function(config) {
 					});
 				}, scope:this}
 			}
-		},{
-			text: _('MeetingRooms.resource_create')
-			,handler: {xtype: 'MeetingRooms-window-resource-create',blankValues: true}
 		}]
 	});
 	MeetingRooms.grid.Resources.superclass.constructor.call(this,config);
 };
-Ext.extend(MeetingRooms.grid.Resources, MODx.grid.Grid);
+Ext.extend(MeetingRooms.grid.Resources, MODx.grid.Grid,{
+	search: function (tf,nv,ov) {
+		var s = this.getStore();
+		s.baseParams.query = tf.getValue();
+		this.getBottomToolbar().changePage(1);
+		this.refresh()
+	}
+});
 Ext.reg('MeetingRooms-grid-Resources',MeetingRooms.grid.Resources);
 			

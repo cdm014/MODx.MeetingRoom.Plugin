@@ -9,13 +9,14 @@ $dir = $modx->getOption('dir',$scriptProperties,'ASC');
 $query = $modx->getOption('query',$scriptProperties,'');
 
 $c = $modx->newQuery('mrResources');
+$c->setClassAlias('mrResources');
+//$c->innerJoin('mrRooms','Rooms','mrResources.room = Rooms.id');
 if (!empty($query)){
 	$qstring = '%'.$query.'%';
-	$output .= "<p>qstring: $qstring</p>";
-	$c->innerJoin('mrRooms','Room');
+	
+	
 	$c->where(array(
-		'name:LIKE' => $qstring
-		,'OR:Room.name:LIKE' => $qstring
+		'mrResources.name:LIKE' => $qstring
 	));
 }
 

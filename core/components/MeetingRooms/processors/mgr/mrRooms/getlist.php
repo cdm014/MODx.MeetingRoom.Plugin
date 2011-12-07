@@ -8,6 +8,7 @@ $query = $modx->getOption('query',$scriptProperties,'');
  //*
 //build query
 $c = $modx->newQuery('mrRooms');
+
 if (!empty($query)){
 	$c->where(array(
 		'name:LIKE' => '%'.$query.'%',

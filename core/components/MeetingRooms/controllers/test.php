@@ -28,13 +28,29 @@ $limit = $modx->getOption('limit',$scriptProperties,10);
 $sort = $modx->getOption('sort',$scriptProperties,'resourceByRoom');
 $dir = $modx->getOption('dir',$scriptProperties,'ASC');
 $query = $modx->getOption('query',$scriptProperties,'');
-$query = 'resource one';
+$query = '1';
+
 $tests['query'] = $query;
 $qstring = '%'.$query.'%';
 $tests['qstring'] = $qstring;
 $c = $modx->newQuery('mrResources');
-$c->innerJoin('mrRooms','Room');
 
+if (!empty($query)){
+	$qstring = '%'.$query.'%';
+	$c->innerJoin('mrRooms','Rooms','room = Rooms.id');
+	$c->where(array(
+		'name:LIKE' => $qstring
+		,'OR:Rooms.name:LIKE' => $qstring
+		
+	));
+}
 
+$tests['count'] = $count = $modx->getCount('mrResources', $c);
+$resources = $modx->getIterator('mrResources',$c);
+foreach ($resources as $resource) {
+	$resourceArray = $resource->toArray();
+	$resourceArray['room_name'] = $modx->getObject('mrRooms',$resourceArray['room'])->get('name');
+	$tests[] = $resourceArray;
+}
 $output .= "<pre>".print_r($tests,true)."</pre>";
 return $output;
