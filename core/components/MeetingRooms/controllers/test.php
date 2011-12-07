@@ -28,7 +28,7 @@ $limit = $modx->getOption('limit',$scriptProperties,10);
 $sort = $modx->getOption('sort',$scriptProperties,'resourceByRoom');
 $dir = $modx->getOption('dir',$scriptProperties,'ASC');
 $query = $modx->getOption('query',$scriptProperties,'');
-$query = '1';
+
 
 $tests['query'] = $query;
 $qstring = '%'.$query.'%';
@@ -46,11 +46,30 @@ if (!empty($query)){
 }
 
 $tests['count'] = $count = $modx->getCount('mrResources', $c);
+$tests[] = $resTable =  $modx->getTableName('mrResources');
+$tests[] = $roomsTable = $modx->getTableName('mrRooms');
+$tests['sql'] = $sql = "Select * from $resTable join $roomsTable as Rooms on room = Rooms.id where $resTable.name like '$qstring' or Rooms.name like '$qstring'";
+$stmt = $modx->prepare($sql);
+$stmtArray = array();
+if ($stmt && $stmt->execute()){
+	$stmtArray[] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	//$tests['stmtArray'] = $stmtArray;
+}
+$list = array();
+foreach ($stmtArray[0] as $stmtRes) {
+	$stmtRes['room_name'] = 'stmt_'.$modx->getObject('mrRooms',$stmtRes['room'])->get('name');
+	$list[] = $stmtRes;
+}
+$jsonresult = json_encode($list);
+$tests['json'] = '{"total":'.count($list).',"results":'.$jsonresult.'}';
+
+//*
 $resources = $modx->getIterator('mrResources',$c);
 foreach ($resources as $resource) {
 	$resourceArray = $resource->toArray();
 	$resourceArray['room_name'] = $modx->getObject('mrRooms',$resourceArray['room'])->get('name');
 	$tests[] = $resourceArray;
 }
+//*/
 $output .= "<pre>".print_r($tests,true)."</pre>";
 return $output;
