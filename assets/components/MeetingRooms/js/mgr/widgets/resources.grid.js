@@ -62,6 +62,17 @@ Ext.extend(MeetingRooms.grid.Resources, MODx.grid.Grid,{
 		this.getBottomToolbar().changePage(1);
 		this.refresh()
 	}
+	,getMenu: function() {
+		var m = [{
+			text: _('MeetingRooms.resource_update')
+			,handler: this.updateResource
+		},'-',{
+			text: _('MeetingRooms.resource_remove')
+			,handler: this.removeResource
+		}]
+		this.addContextMenuItem(m);
+		return true;
+	}
 });
 Ext.reg('MeetingRooms-grid-Resources',MeetingRooms.grid.Resources);
 			
