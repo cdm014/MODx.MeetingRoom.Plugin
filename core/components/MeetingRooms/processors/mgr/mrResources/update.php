@@ -10,5 +10,6 @@ $mrResource->fromArray($scriptProperties);
 if ($mrResource->save() == false) {
 	return $modx->error->failure($modx->lexicon('MeetingRooms.resource_err_save'));
 }
-return $modx->error->failure('<pre>'.print_r($scriptProperties,true).'</pre>');
+$mrResourceArray = $mrResource->toArray();
+//return $modx->error->failure('<pre>'.print_r($scriptProperties,true).print_r($mrResourceArray,true).'</pre>');
 return $modx->error->success('',$mrResource);

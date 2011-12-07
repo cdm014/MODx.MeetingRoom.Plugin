@@ -103,4 +103,40 @@ Ext.extend(MeetingRooms.grid.Resources, MODx.grid.Grid,{
 	}
 });
 Ext.reg('MeetingRooms-grid-Resources',MeetingRooms.grid.Resources);
-			
+
+MeetingRooms.window.UpdateResource = function(config) {
+    config = config || {};
+    Ext.applyIf(config,{
+        title: _('MeetingRooms.resource_update')
+        ,url: MeetingRooms.config.connectorUrl
+        ,baseParams: {
+            action: 'mgr/mrResources/update'
+        }
+        ,fields: [{
+            xtype: 'hidden'
+            ,name: 'id'
+        },{
+            xtype: 'textfield'
+            ,fieldLabel: _('MeetingRooms.resource_name')
+            ,name: 'name'
+            ,width: 300
+        },{
+            xtype: 'textfield'
+            ,fieldLabel: _('MeetingRooms.resource_maxAmount')
+            ,name: 'max_amount'
+            ,width: 100
+        },{
+			xtype: 'modx-combo'
+			,url: MeetingRooms.config.connectorUrl
+			,baseParams: { action: 'mgr/mrRooms/getlist' }
+			,resizable: false
+			,fieldLabel: _('MeetingRooms.name')
+			,name: 'roomName'
+			,hiddenName: 'room'
+		}]
+		
+    });
+    MeetingRooms.window.UpdateResource.superclass.constructor.call(this,config);
+};
+Ext.extend(MeetingRooms.window.UpdateResource,MODx.Window);
+Ext.reg('MeetingRooms-window-mrResource-update',MeetingRooms.window.UpdateResource);
