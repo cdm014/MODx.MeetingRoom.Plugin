@@ -73,6 +73,34 @@ Ext.extend(MeetingRooms.grid.Resources, MODx.grid.Grid,{
 		this.addContextMenuItem(m);
 		return true;
 	}
+	,updateResource: function(btn,e) {
+		if(!this.updateResourceWindow) {
+			this.updateResourceWindow = MODx.load({
+				xtype: 'MeetingRooms-window-mrResource-update'
+				,record: this.menu.record
+				,listeners: {
+					'success': {fn:this.refresh,scope:this}
+				}
+			});
+		} else {
+			this.updateResourceWindow.setValues(this.menu.record);
+		}
+		this.updateResourceWindow.show(e.target);
+	}
+	,removeResource: function() {
+		MODx.msg.config({
+			title: _('MeetingRooms.resource_remove')
+			,text: _('MeetingRooms.resource_remove_confirm')
+			,url: this.config.url
+			,params: {
+				action: 'mgr/mrResources/remove'
+				,id: this.menu.record.id
+			}
+			,listeners: {
+				'success': {fn: this.refresh, scope: this}
+			}
+		});
+	}
 });
 Ext.reg('MeetingRooms-grid-Resources',MeetingRooms.grid.Resources);
 			
