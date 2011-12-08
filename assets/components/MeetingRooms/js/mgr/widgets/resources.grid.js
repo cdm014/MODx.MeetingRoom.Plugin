@@ -139,3 +139,30 @@ MeetingRooms.window.UpdateResource = function(config) {
 };
 Ext.extend(MeetingRooms.window.UpdateResource,MODx.Window);
 Ext.reg('MeetingRooms-window-mrResource-update',MeetingRooms.window.UpdateResource);
+
+MeetingRooms.window.CreateResource = function(config) {
+	config = config || {};
+	Ext.applyIf(config,{
+		title: _('MeetingRooms.resource_create')
+		,url: MeetingRooms.config.connectorUrl
+		,baseParams: {
+			action: 'mgr/mrResources/create'
+		}
+		,fields: [{
+			xtype: 'textfield'
+			,fieldLabel: _('MeetingRooms.resource_name')
+			,name: 'name'
+			,width: 300
+		},{
+			xtype: 'textfield'
+			,fieldLabel: _('MeetingRooms.resource_maxAmount')
+			,name: 'max_amount'
+			,width: 100
+		},{
+			xtype: 'MeetingRooms-combo-mrRooms'
+		}]
+	});
+	MeetingRooms.window.CreateResource.superclass.constructor.call(this,config);
+};
+Ext.extend(MeetingRooms.window.CreateResource, MODx.Window);
+Ext.reg('MeetingRooms-window-resource-create',MeetingRooms.window.CreateResource);
