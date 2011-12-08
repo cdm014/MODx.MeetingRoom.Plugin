@@ -88,7 +88,7 @@ Ext.extend(MeetingRooms.grid.Resources, MODx.grid.Grid,{
 		this.updateResourceWindow.show(e.target);
 	}
 	,removeResource: function() {
-		MODx.msg.config({
+		MODx.msg.confirm({
 			title: _('MeetingRooms.resource_remove')
 			,text: _('MeetingRooms.resource_remove_confirm')
 			,url: this.config.url
