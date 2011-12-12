@@ -6,8 +6,9 @@ $sort = $modx->getOption('sort',$scriptProperties,'start');
 $dir = $modx->getOption('dir',$scriptProperties,'ASC');
 $query = $modx->getOption('query',$scriptProperties,'');
 $room = $modx->getOption('room',$scriptProperties,'');
+$date = $modx->getOption('date',$scriptProperties, date('Y-m-d 00:00:00'));
 
-$mysqlFormat = 'Y-m-d H:i:s';
+
 /*
 //branch for when I add code to allow filtering appointments by room
 if (!empty $room) {
@@ -22,7 +23,7 @@ if (!empty $room) {
 //*/
 
 $c = $modx->newQuery('mrRequests');
-$date = date('Y-m-d 00:00:00');
+
 
 if (!empty($query)) {
 	$qstring = '%'.$query.'%';

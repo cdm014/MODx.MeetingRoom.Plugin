@@ -60,7 +60,7 @@ Ext.extend(MeetingRooms.grid.Resources, MODx.grid.Grid,{
 		var s = this.getStore();
 		s.baseParams.query = tf.getValue();
 		this.getBottomToolbar().changePage(1);
-		this.refresh()
+		this.refresh();
 	}
 	,getMenu: function() {
 		var m = [{

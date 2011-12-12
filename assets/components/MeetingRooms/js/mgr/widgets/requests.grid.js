@@ -1,3 +1,6 @@
+//possibly a good place to put some cookie reading code to prepopulate values
+//then I could add the values to the baseparams in the datasource
+
 MeetingRooms.grid.Requests = function(config) {
 	config = config ||{};
 	Ext.applyIf(config, {
@@ -61,11 +64,20 @@ MeetingRooms.grid.Requests = function(config) {
 			,fieldLabel: 'MeetingRooms.requests_start'
 			,hideLabel: false
 			,value: new Date()
-			
+			,listeners: {
+				'select': {fn: this.dateChange,scope:this}
+			}
 			
 		}]
 	});
 	MeetingRooms.grid.Requests.superclass.constructor.call(this,config);
 };
-Ext.extend(MeetingRooms.grid.Requests, MODx.grid.Grid);
+Ext.extend(MeetingRooms.grid.Requests, MODx.grid.Grid,{
+	dateChange: function (df,nv,ov) {
+		var s = this.getStore();
+		s.baseParams.date = df.getValue().format('Y-m-d');
+		this.getBottomToolbar().changePage(1);
+		this.refresh();
+	}
+});
 Ext.reg('MeetingRooms-grid-Requests', MeetingRooms.grid.Requests);
