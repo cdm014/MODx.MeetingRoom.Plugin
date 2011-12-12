@@ -1,5 +1,5 @@
 <?php
-//*
+/*
 //debug messages
 $modx->setDebug(true);
 $modx->setLogLevel(modX::LOG_LEVEL_DEBUG);
@@ -16,7 +16,7 @@ if (!($meetingRooms instanceof mrManager)) {
 }
 $output .= "\nFile Check: ".file_exists($modx->getOption('MeetingRooms.core_path',null,$modx->getOption('core_path').'components/MeetingRooms/').'model/MeetingRooms/mrmanager.class.php');
 $output .= "\nLooked for in: ".$meetingRooms->config["modelPath"];
-//*
+/*
 //generate tables
 $m = $modx->getManager();
 $created = array();
