@@ -39,7 +39,7 @@
 		<field key="end" dbtype="datetime" phptype="datetime" null="false" />
 		<field key="requestNumber" dbtype="varchar" precision="30" phptype="string" null="false" default="" />
 		<field key="room" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
-		
+		<field key="status" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
 		<index alias="libraryCard" name="libraryCard" primary="false" unique="false" type="BTREE">
 			<column key="libraryCard" collation="A" null="false" />
 		</index>

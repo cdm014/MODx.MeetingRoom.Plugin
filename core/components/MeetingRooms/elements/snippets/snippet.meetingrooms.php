@@ -1,10 +1,10 @@
 <?php
-/*
+//*
 //debug messages
 $modx->setDebug(true);
 $modx->setLogLevel(modX::LOG_LEVEL_DEBUG);
 $modx->setLogTarget(XPDO_CLI_MODE ? 'ECHO' : 'HTML');
-*/
+//*/
 $output = "<pre>";
 $output .= "test 1\n";
 $output .= "expected path: ".$modx->getOption('MeetingRooms.core_path',null,$modx->getOption('core_path').'components/MeetingRooms/').'model/MeetingRooms/';
@@ -16,7 +16,7 @@ if (!($meetingRooms instanceof mrManager)) {
 }
 $output .= "\nFile Check: ".file_exists($modx->getOption('MeetingRooms.core_path',null,$modx->getOption('core_path').'components/MeetingRooms/').'model/MeetingRooms/mrmanager.class.php');
 $output .= "\nLooked for in: ".$meetingRooms->config["modelPath"];
-/*
+//*
 //generate tables
 $m = $modx->getManager();
 $created = array();
@@ -25,7 +25,7 @@ $created['mrResources'] = $m->createObjectContainer('mrResources');
 $created['mrRequests'] = $m->createObjectContainer('mrRequests');
 $created['mrRequestedResource'] = $m->createObjectContainer('mrRequestedResource');
 $output .= print_r($created,true);
-*/
+//*/
 /*
 //view loaded packages
 $output .= print_r($modx->packages,true);
