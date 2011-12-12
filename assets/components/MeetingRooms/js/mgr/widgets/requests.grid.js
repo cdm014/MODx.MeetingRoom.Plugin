@@ -13,6 +13,11 @@ MeetingRooms.grid.Requests = function(config) {
 			header: _('id')
 			,dataIndex: 'id'
 			,sortable: true
+			,width: 20
+		},{
+			header: _('MeetingRooms.requests_requestNumber')
+			,data_index: 'requestNumber'
+			,sortable: true
 			,width: 60
 		},{
 			header: _('MeetingRooms.name')
@@ -23,11 +28,6 @@ MeetingRooms.grid.Requests = function(config) {
 			header: _('MeetingRooms.request_start')
 			,dataIndex: 'start'
 			,sortable: true
-			,width: 100
-		},{
-			header: _('MeetingRooms.request_end')
-			,dataIndex: 'end'
-			,sortable: false
 			,width: 100
 		},{
 			header: _('MeetingRooms.request_name')
@@ -44,6 +44,25 @@ MeetingRooms.grid.Requests = function(config) {
 			,dataIndex: 'email'
 			,sortable: false
 			,width: 100
+		}]
+		,tbar: [{
+			text: _('MeetingRooms.requests_create')
+			,handler: { xtype: 'MeetingRooms-window-request-create',blankValues: true}
+		},{
+			xtype: 'MeetingRooms-combo-mrRooms'
+			,fieldLabel: _('MeetingRooms.name')
+			,hideLabel: false
+			//insert listners section with change listener
+			//lookat resources.grid.js line 40
+		},{
+			xtype: 'datefield'
+			,id: 'date'
+			,name: 'date'
+			,fieldLabel: 'MeetingRooms.requests_start'
+			,hideLabel: false
+			,value: new Date()
+			
+			
 		}]
 	});
 	MeetingRooms.grid.Requests.superclass.constructor.call(this,config);

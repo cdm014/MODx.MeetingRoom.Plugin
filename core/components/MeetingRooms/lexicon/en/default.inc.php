@@ -30,3 +30,5 @@ $_lang['MeetingRooms.request_name'] = 'Patron';
 $_lang['MeetingRooms.request_phone'] = 'Phone Number';
 $_lang['MeetingRooms.request_email'] = 'E-Mail Address';
 $_lang['MeetingRooms.requests'] = 'Requests';
+$_lang['MeetingRooms.requests_requestNumber'] = 'Request Number';
+$_lang['MeetingRooms.requests_create'] = 'Add a new Request';
