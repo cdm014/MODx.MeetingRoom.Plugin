@@ -41,6 +41,13 @@ MeetingRooms.panel.Home = function(config) {
 					xtype: 'MeetingRooms-grid-Resources'
 					,preventRender: true
 				}]
+			},{
+				title: _('MeetingRooms.requests')
+				,defaults: {autoHeight: true}
+				,items: [{
+					xtype: 'MeetingRooms-grid-Requests'
+					,preventRender: true
+				}]
 			}]
 		}]
 	});

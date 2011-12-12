@@ -33,7 +33,7 @@ MeetingRooms.grid.Requests = function(config) {
 			header: _('MeetingRooms.request_name')
 			,dataIndex: 'name'
 			,sortable: false
-			width: 100
+			,width: 100
 		},{
 			header: _('MeetingRooms.request_phone')
 			,dataIndex: 'phone'
@@ -46,7 +46,7 @@ MeetingRooms.grid.Requests = function(config) {
 			,width: 100
 		}]
 	});
-	MeetingRooms.grid.Requests.superclass.constructor.class(this,config);
+	MeetingRooms.grid.Requests.superclass.constructor.call(this,config);
 };
 Ext.extend(MeetingRooms.grid.Requests, MODx.grid.Grid);
 Ext.reg('MeetingRooms-grid-Requests', MeetingRooms.grid.Requests);

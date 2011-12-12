@@ -11,6 +11,7 @@
 $modx->regClientStartupScript($mrManager->config['jsUrl'].'mgr/widgets/MeetingRooms.grid.js');
 //load the js for our Resources Grid
 $modx->regClientStartupScript($mrManager->config['jsUrl'].'mgr/widgets/resources.grid.js');
+$modx->regClientStartupScript($mrManager->config['jsUrl'].'mgr/widgets/requests.grid.js');
 //load mgr/widgets/home.panel.js from our assets
 $modx->regClientStartupScript($mrManager->config['jsUrl'].'mgr/widgets/home.panel.js');
 
