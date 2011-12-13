@@ -55,8 +55,9 @@ MeetingRooms.grid.Requests = function(config) {
 			xtype: 'MeetingRooms-combo-mrRooms'
 			,fieldLabel: _('MeetingRooms.name')
 			,hideLabel: false
-			//insert listners section with change listener
-			//lookat resources.grid.js line 40
+			,listeners: {
+				'select': {fn: this.roomChange,scope:this}
+			}
 		},{
 			xtype: 'datefield'
 			,id: 'date'
@@ -76,6 +77,12 @@ Ext.extend(MeetingRooms.grid.Requests, MODx.grid.Grid,{
 	dateChange: function (df,nv,ov) {
 		var s = this.getStore();
 		s.baseParams.date = df.getValue().format('Y-m-d');
+		this.getBottomToolbar().changePage(1);
+		this.refresh();
+	}
+	,roomChange: function (cmb, nv, ov) {
+		var s = this.getStore();
+		s.baseParams.room = cmb.getValue();
 		this.getBottomToolbar().changePage(1);
 		this.refresh();
 	}

@@ -7,23 +7,14 @@ $dir = $modx->getOption('dir',$scriptProperties,'ASC');
 $query = $modx->getOption('query',$scriptProperties,'');
 $room = $modx->getOption('room',$scriptProperties,'');
 $date = $modx->getOption('date',$scriptProperties, date('Y-m-d 00:00:00'));
-
-
-/*
-//branch for when I add code to allow filtering appointments by room
-if (!empty $room) {
-
-
-} else {
-
-
-
+function debug_msg($array) {
+	return '<pre>'.print_r($array,true).'</pre>';
 }
 
-//*/
+$debug[] = $scriptProperties;
 
 $c = $modx->newQuery('mrRequests');
-
+//return $modx->error->failure(debug_msg($debug));
 
 if (!empty($query)) {
 	$qstring = '%'.$query.'%';
@@ -36,6 +27,12 @@ if (!empty($query)) {
 		'OR:requestNumber:LIKE' => $qstring,
 		
 	));
+}
+
+if (!empty($room)) {
+	$c->where(array(
+		'room:=' => $room
+	), xPDOQuery::SQL_AND);
 }
 $c->where(array(
 	'start:>=' => $date
