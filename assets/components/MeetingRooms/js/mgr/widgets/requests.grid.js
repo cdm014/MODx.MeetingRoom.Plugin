@@ -22,6 +22,9 @@ MeetingRooms.grid.Requests = function(config) {
 			,data_index: 'requestNumber'
 			,sortable: true
 			,width: 60
+			,renderer: function (value, metaData, record, rowIndex,colIndex, store) {
+				return record.data.requestNumber;
+			}
 		},{
 			header: _('MeetingRooms.name')
 			,dataIndex: 'room_name'
