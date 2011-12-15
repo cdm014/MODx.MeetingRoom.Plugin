@@ -6,7 +6,10 @@ MeetingRooms.grid.Requests = function(config) {
 	Ext.applyIf(config, {
 		id: 'MeetingRooms-grid-Requests'
 		,url: MeetingRooms.config.connectorUrl
-		,baseParams: { action: 'mgr/mrRequests/getlist'}
+		,baseParams: { 
+			action: 'mgr/mrRequests/getlist'
+			,date: new Date()
+		}
 		,fields: ['id','name','libraryCard','email','phone','group','meetingType','start','end','requestNumber','room','room_name']
 		,paging: true
 		,remoteSort: true
@@ -54,7 +57,7 @@ MeetingRooms.grid.Requests = function(config) {
 		,tbar: [{
 			text: _('MeetingRooms.requests_create')
 			,handler: { xtype: 'MeetingRooms-window-request-create',blankValues: true}
-		},{
+		},'->',{
 			xtype: 'MeetingRooms-combo-mrRooms'
 			,fieldLabel: _('MeetingRooms.name')
 			,hideLabel: false
@@ -72,6 +75,30 @@ MeetingRooms.grid.Requests = function(config) {
 				'select': {fn: this.dateChange,scope:this}
 			}
 			
+		},{
+			xtype: 'textfield'
+			,id: 'Requests-search-filter'
+			,emptyText: _('MeetingRooms.search...')
+			,listeners: {
+				'change': {fn: this.search, scope:this}
+				,'render': {fn: function(cmp) {
+					new Ext.KeyMap(cmp.getEl(), {
+						key: Ext.EventObject.ENTER
+						,fn: function() {
+							this.fireEvent('change',this);
+							this.blur();
+							return true;
+						}
+						,scope: cmp
+					});
+				}, scope:this}
+			}			
+		},{
+			text: 'Clear Search'
+			,listeners: {
+				'click': {fn: this.clearSearch, scope:this}
+			}
+		
 		}]
 	});
 	MeetingRooms.grid.Requests.superclass.constructor.call(this,config);
@@ -89,5 +116,22 @@ Ext.extend(MeetingRooms.grid.Requests, MODx.grid.Grid,{
 		this.getBottomToolbar().changePage(1);
 		this.refresh();
 	}
+	,search: function (tf,nv,ov) {
+		var s = this.getStore();
+		s.baseParams.query = tf.getValue();
+		this.getBottomToolbar().changePage(1);
+		this.refresh();
+	}
+	,clearSearch: function () {
+		var s = this.getStore();
+		delete s.baseParams.query;
+		delete s.baseParams.room;
+		s.baseParams.date = new Date();
+		this.getBottomToolbar().changePage(1);
+		Ext.getCmp('date').setValue(new Date());
+		Ext.getCmp('Requests-search-filter').setValue('');
+		this.refresh();
+	}
+	
 });
 Ext.reg('MeetingRooms-grid-Requests', MeetingRooms.grid.Requests);

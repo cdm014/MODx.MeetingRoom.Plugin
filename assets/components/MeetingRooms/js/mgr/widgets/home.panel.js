@@ -45,6 +45,16 @@ MeetingRooms.panel.Home = function(config) {
 				title: _('MeetingRooms.requests')
 				,defaults: {autoHeight: true}
 				,items: [{
+					html: '<p><strong>Instructions:</strong></p>'
+					,border: false
+				},{
+					html: '<p>The clear search button will reset the date field to the current date.</p>'
+					,border: false
+				},{
+					html: '<p>To see past requests, you will need to change the date field.<p>'
+					,border: false
+				
+				},{
 					xtype: 'MeetingRooms-grid-Requests'
 					,preventRender: true
 				}]

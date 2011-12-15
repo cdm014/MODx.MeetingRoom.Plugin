@@ -6,7 +6,7 @@ $sort = $modx->getOption('sort',$scriptProperties,'start');
 $dir = $modx->getOption('dir',$scriptProperties,'ASC');
 $query = $modx->getOption('query',$scriptProperties,'');
 $room = $modx->getOption('room',$scriptProperties,'');
-$date = $modx->getOption('date',$scriptProperties, date('Y-m-d 00:00:00'));
+$date = $modx->getOption('date',$scriptProperties, '');
 function debug_msg($array) {
 	return '<pre>'.print_r($array,true).'</pre>';
 }
@@ -15,7 +15,7 @@ $debug[] = $scriptProperties;
 
 $c = $modx->newQuery('mrRequests');
 //return $modx->error->failure(debug_msg($debug));
-
+/*
 if (!empty($query)) {
 	$qstring = '%'.$query.'%';
 	$c->where(array(
@@ -28,15 +28,29 @@ if (!empty($query)) {
 		
 	));
 }
+//*/
+if (!empty($query)) {
+	$qstring = '%'.$query.'%';
+	$c->where(array(
+		'name:LIKE' => $qstring,
+		'OR:group:LIKE' => $qstring,
+		'OR:email:LIKE' => $qstring,
+		'OR:requestNumber:LIKE' => $qstring,
+		
+	));
+}
+
 
 if (!empty($room)) {
 	$c->where(array(
 		'room:=' => $room
 	), xPDOQuery::SQL_AND);
 }
-$c->where(array(
-	'start:>=' => $date
-), xPDOQuery::SQL_AND);
+if (!empty($date)) {
+	$c->where(array(
+		'start:>=' => $date
+	), xPDOQuery::SQL_AND);
+}
 $count = $modx->getCount('mrRequess',$c);
 $c->sortby($sort,$dir);
 
