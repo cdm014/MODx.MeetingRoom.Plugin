@@ -132,6 +132,25 @@ Ext.extend(MeetingRooms.grid.Requests, MODx.grid.Grid,{
 		Ext.getCmp('Requests-search-filter').setValue('');
 		this.refresh();
 	}
+	,getMenu: function() {
+		var m = [{
+			text: _('MeetingRooms.requests_update')
+			,handler: this.updateRequest
+		}
+		,{
+			text: _('MeetingRooms.requests_updateGroup')
+			,handler: this.updateRequestGroup
+		},'-',{
+			text: _('MeetingRooms.requests_remove')
+			,handler: this.removeRequest
+		}
+		,{
+			text: _('MeetingRooms.requests_removeGroup')
+			,handler: this.removeRequestGroup
+		}]
+		this.addContextMenuItem(m);
+		return true;
+	}
 	
 });
 Ext.reg('MeetingRooms-grid-Requests', MeetingRooms.grid.Requests);

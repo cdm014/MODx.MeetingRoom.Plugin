@@ -32,3 +32,7 @@ $_lang['MeetingRooms.request_email'] = 'E-Mail Address';
 $_lang['MeetingRooms.requests'] = 'Requests';
 $_lang['MeetingRooms.requests_requestNumber'] = 'Request Number';
 $_lang['MeetingRooms.requests_create'] = 'Add a new Request';
+$_lang['MeetingRooms.requests_update'] = 'Update Request';
+$_lang['MeetingRooms.requests_updateGroup'] = 'Update All Requests in this Group';
+$_lang['MeetingRooms.requests_remove'] = 'Remove Request';
+$_lang['MeetingRooms.requests_removeGroup'] = 'Remove All Requests in this Group';
