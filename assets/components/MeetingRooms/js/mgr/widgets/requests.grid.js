@@ -151,6 +151,92 @@ Ext.extend(MeetingRooms.grid.Requests, MODx.grid.Grid,{
 		this.addContextMenuItem(m);
 		return true;
 	}
+	,updateRequest: function(btn,e) {
+		if(!this.updateRequestWindow) {
+			this.updateRequestWindow = MODx.load({
+				xtype: 'MeetingRooms-window-mrRequests-update'
+				,record: this.menu.record
+				,listeners: {
+					'success': {fn:this.refresh,scope:this}
+				}
+			});
+		} else {
+			this.updateRequestWindow.setValues(this.menu.record);
+		}
+		this.updateRequestWindow.show(e.target);
+	}
 	
 });
 Ext.reg('MeetingRooms-grid-Requests', MeetingRooms.grid.Requests);
+
+MeetingRooms.window.UpdateRequest = function(config) {
+	config = config || {};
+	this.config = config;
+	textvar = '<pre>'+this.config+'</pre>';
+	Ext.applyIf(config,{
+		title: _('MeetingRooms.request_update')
+		,text: textvar
+		,url: MeetingRooms.config.connectorUrl
+		,baseParams: {
+			action: 'mgr/mrRequests/update'
+		}
+		,fields: [{
+			xtype: 'hidden'
+			,name: 'id'
+		},{
+			xtype: 'textfield'
+			,name: 'Name'
+			,fieldLabel: _('MeetingRooms.requester_name')
+			,width: 300
+		},{
+			xtype: 'textfield'
+			,name: 'libraryCard'
+			,fieldLabel: _('MeetingRooms.requester_id')
+			,width: 300
+		},{
+			xtype: 'textfield'
+			,name: 'email'
+			,fieldLabel: _('MeetingRooms.request_email')
+			,width: 100
+		},{
+			xtype: 'textfield'
+			,name: 'phone'
+			,fieldLabel: _('MeetingRooms.request_phone')
+			,width: 100
+		},{
+			xtype: 'textfield'
+			,name: 'group'
+			,fieldLabel: _('MeetingRooms.request_group')
+			,width: 300
+		},{
+			xtype: 'textfield'
+			,name: 'meetingType'
+			,fieldLabel: _('MeetingRooms.request_meeting_type')
+			,width: 300
+		},{
+			xtype: 'datefield'
+			,name: 'startDate'
+			,fieldLabel: _('MeetingRooms.request_start_date')
+		},{
+			xtype: 'timefield'
+			,name: 'startTime'
+			,fieldLabel: _('MeetingRooms.request_start_time')
+		},{
+			xtype: 'datefield'
+			,name: 'endDate'
+			,fieldLabel: _('MeetingRooms.request_end_date')
+		},{
+			xtype: 'timefield'
+			,name: 'endTime'
+			,fieldLabel: _('MeetingRooms.request_end_time')
+		},{
+			xtype: 'hidden'
+			,name: 'requestNumber'
+		},{
+			xtype: 'MeetingRooms-combo-mrRooms'
+		}]
+	});
+	MeetingRooms.window.UpdateRequest.superclass.constructor.call(this,config);
+};
+Ext.extend(MeetingRooms.window.UpdateRequest, MODx.Window);
+Ext.reg('MeetingRooms-window-mrRequests-update', MeetingRooms.window.UpdateRequest);
