@@ -7,9 +7,9 @@ MeetingRooms.combo.RequestStatus = function (config) {
 			id: 0
 			,fields: ['status', 'display']
 			,data: [
-				[-1, 'Denied']
-				,[0, 'Pending']
-				,[1, 'Approved']
+				[2, 'Denied']
+				,[1, 'Pending']
+				,[3, 'Approved']
 			]
 		})
 		,mode: 'local'

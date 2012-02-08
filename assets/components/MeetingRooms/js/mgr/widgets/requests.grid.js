@@ -10,7 +10,7 @@ MeetingRooms.grid.Requests = function(config) {
 			action: 'mgr/mrRequests/getlist'
 			,date: new Date()
 		}
-		,fields: ['id','name','libraryCard','email','phone','group','meetingType','start','end','requestNumber','room','room_name']
+		,fields: ['id','name','libraryCard','email','phone','group','meetingType','start','end','requestNumber','room','room_name','status']
 		,paging: true
 		,remoteSort: true
 		,anchor: '97%'
@@ -20,6 +20,11 @@ MeetingRooms.grid.Requests = function(config) {
 			,dataIndex: 'id'
 			,sortable: true
 			,width: 20
+		},{
+			header: 'status'
+			,dataIndex: 'status'
+			,sortable: true
+			,width: 50
 		},{
 			header: _('MeetingRooms.requests_requestNumber')
 			,data_index: 'requestNumber'
@@ -56,7 +61,10 @@ MeetingRooms.grid.Requests = function(config) {
 		}]
 		,tbar: [{
 			text: _('MeetingRooms.requests_create')
-			,handler: { xtype: 'MeetingRooms-window-request-create',blankValues: true}
+			//blankValues is false so that previous data is recomended
+			//since I can't work out how to let them select multiple dates this
+			//is the best compromise
+			,handler: { xtype: 'MeetingRooms-window-request-create',blankValues: false}
 		},'->',{
 			xtype: 'MeetingRooms-combo-mrRooms'
 			,fieldLabel: _('MeetingRooms.name')
@@ -185,8 +193,8 @@ MeetingRooms.window.UpdateRequest = function(config) {
 			,name: 'id'
 		},{
 			xtype: 'textfield'
-			,name: 'Name'
-			,fieldLabel: _('MeetingRooms.requester_name')
+			,name: 'name'
+			,fieldLabel: _('MeetingRooms.request_name')
 			,width: 300
 		},{
 			xtype: 'textfield'
@@ -222,10 +230,6 @@ MeetingRooms.window.UpdateRequest = function(config) {
 			,name: 'startTime'
 			,fieldLabel: _('MeetingRooms.request_start_time')
 		},{
-			xtype: 'datefield'
-			,name: 'endDate'
-			,fieldLabel: _('MeetingRooms.request_end_date')
-		},{
 			xtype: 'timefield'
 			,name: 'endTime'
 			,fieldLabel: _('MeetingRooms.request_end_time')
@@ -234,6 +238,9 @@ MeetingRooms.window.UpdateRequest = function(config) {
 			,name: 'requestNumber'
 		},{
 			xtype: 'MeetingRooms-combo-mrRooms'
+		},{
+			xtype: 'meetingrooms-combo-requeststatus'
+			,value: this.config.record.status
 		}]
 	});
 	MeetingRooms.window.UpdateRequest.superclass.constructor.call(this,config);

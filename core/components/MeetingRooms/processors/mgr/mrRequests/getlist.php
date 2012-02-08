@@ -62,6 +62,10 @@ $list = array();
 foreach ($requests as $request) {
 	$requestArray = $request->toArray();
 	$room = $modx->getObject('mrRooms',$requestArray['room']);
+	$id = $requestArray[id];
+	$mrRequest = $modx->getObject('mrRequests',$id);
+	$status = $mrRequest->get('status');
+	$requestArray['status'] = 3;
 	$requestArray['room_name'] = $room->get('name');
 	$list[] = $requestArray;
 }

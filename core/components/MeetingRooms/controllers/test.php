@@ -19,36 +19,15 @@ $tests['mrResourceGetListPath'] = $mybasePath.$mrResourceGetListPath.'.php';
 $tests['resources getlist'] = file_exists($mybasePath.$mrResourceGetListPath.'.php');
 
 $scriptProperties = array();
-//$scriptProperties['query'] = 'test1';
+
+$c = $modx->newQuery('mrRequests');
 
 
-$isLimit = !empty($scriptProperties['limit']);
-$start = $modx->getOption('start',$scriptProperties,0);
-$limit = $modx->getOption('limit',$scriptProperties,10);
-$sort = $modx->getOption('sort',$scriptProperties,'resourceByRoom');
-$dir = $modx->getOption('dir',$scriptProperties,'ASC');
-$query = $modx->getOption('query',$scriptProperties,'');
 
-
-$tests['query'] = $query;
-$qstring = '%'.$query.'%';
-$tests['qstring'] = $qstring;
-$c = $modx->newQuery('mrResources');
-
-if (!empty($query)){
-	$qstring = '%'.$query.'%';
-	$c->innerJoin('mrRooms','Rooms','room = Rooms.id');
-	$c->where(array(
-		'name:LIKE' => $qstring
-		,'OR:Rooms.name:LIKE' => $qstring
-		
-	));
-}
-
-$tests['count'] = $count = $modx->getCount('mrResources', $c);
-$tests[] = $resTable =  $modx->getTableName('mrResources');
+$tests['count'] = $count = $modx->getCount('mrRequests', $c);
+$tests[] = $resTable =  $modx->getTableName('mrRequests');
 $tests[] = $roomsTable = $modx->getTableName('mrRooms');
-$tests['sql'] = $sql = "Select * from $resTable join $roomsTable as Rooms on room = Rooms.id where $resTable.name like '$qstring' or Rooms.name like '$qstring'";
+$tests['sql'] = $sql = "Select * from $resTable join $roomsTable as Rooms on room = Rooms.id ";
 $stmt = $modx->prepare($sql);
 $stmtArray = array();
 if ($stmt && $stmt->execute()){
@@ -57,19 +36,15 @@ if ($stmt && $stmt->execute()){
 }
 $list = array();
 foreach ($stmtArray[0] as $stmtRes) {
+	$tests[] = $stmtRes;
 	$stmtRes['room_name'] = 'stmt_'.$modx->getObject('mrRooms',$stmtRes['room'])->get('name');
+	$id = $stmtRes['id'];
+	$object = $modx->getObject('mrRequests',$id);
+	$tests[] = $object->get('id');
 	$list[] = $stmtRes;
 }
 $jsonresult = json_encode($list);
 $tests['json'] = '{"total":'.count($list).',"results":'.$jsonresult.'}';
 
-//*
-$resources = $modx->getIterator('mrResources',$c);
-foreach ($resources as $resource) {
-	$resourceArray = $resource->toArray();
-	$resourceArray['room_name'] = $modx->getObject('mrRooms',$resourceArray['room'])->get('name');
-	$tests[] = $resourceArray;
-}
-//*/
 $output .= "<pre>".print_r($tests,true)."</pre>";
 return $output;

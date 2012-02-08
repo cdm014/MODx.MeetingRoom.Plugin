@@ -15,6 +15,7 @@ $xpdo_meta_map['mrRequests']= array (
     'end' => NULL,
     'requestNumber' => '',
     'room' => 0,
+    'status' => 0,
   ),
   'fieldMeta' => 
   array (
@@ -86,6 +87,15 @@ $xpdo_meta_map['mrRequests']= array (
       'default' => '',
     ),
     'room' => 
+    array (
+      'dbtype' => 'int',
+      'precision' => '10',
+      'attributes' => 'unsigned',
+      'phptype' => 'integer',
+      'null' => false,
+      'default' => 0,
+    ),
+    'status' => 
     array (
       'dbtype' => 'int',
       'precision' => '10',
