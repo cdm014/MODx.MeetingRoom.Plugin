@@ -225,14 +225,18 @@ MeetingRooms.window.UpdateRequest = function(config) {
 			xtype: 'datefield'
 			,name: 'startDate'
 			,fieldLabel: _('MeetingRooms.request_start_date')
+			,value: this.config.record.start.split(" ",1)[0]
+			,format: 'Y-m-d'
 		},{
 			xtype: 'timefield'
 			,name: 'startTime'
 			,fieldLabel: _('MeetingRooms.request_start_time')
+			,value: this.config.record.start.split(" ")[1].split(":")[0]+":"+this.config.record.start.split(" ")[1].split(":")[1]
 		},{
 			xtype: 'timefield'
 			,name: 'endTime'
 			,fieldLabel: _('MeetingRooms.request_end_time')
+			,value:this.config.record.end.split(" ")[1].split(":")[0]+":"+this.config.record.end.split(" ")[1].split(":")[1]
 		},{
 			xtype: 'hidden'
 			,name: 'requestNumber'

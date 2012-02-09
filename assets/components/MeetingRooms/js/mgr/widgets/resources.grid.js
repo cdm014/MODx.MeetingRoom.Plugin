@@ -51,6 +51,16 @@ MeetingRooms.grid.Resources = function(config) {
 					});
 				}, scope:this}
 			}
+		},{
+			xtype: 'MeetingRooms-combo-mrRooms'
+			,listeners: {
+				'select': {fn: this.roomSearch,scope:this}
+			}
+		},'->',{
+			text: 'Clear Search'
+			,listeners: {
+				'click': {fn: this.clearSearch, scope:this}
+			}
 		}]
 	});
 	MeetingRooms.grid.Resources.superclass.constructor.call(this,config);
@@ -59,7 +69,22 @@ Ext.extend(MeetingRooms.grid.Resources, MODx.grid.Grid,{
 	search: function (tf,nv,ov) {
 		var s = this.getStore();
 		s.baseParams.query = tf.getValue();
+		
 		this.getBottomToolbar().changePage(1);
+		this.refresh();
+	}
+	,roomSearch: function (cmb, nv, ov) {
+		var s = this.getStore();
+		s.baseParams.room = cmb.getValue();
+		this.getBottomToolbar().changePage(1);
+		this.refresh();
+	}
+	,clearSearch: function() {
+		var s = this.getStore();
+		delete s.baseParams.query;
+		delete s.baseParams.room;
+		this.getBottomToolbar().changePage(1);
+		Ext.getCmp('Resources-search-filter').setValue('');
 		this.refresh();
 	}
 	,getMenu: function() {

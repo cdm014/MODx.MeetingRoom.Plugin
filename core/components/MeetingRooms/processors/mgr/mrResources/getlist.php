@@ -9,10 +9,22 @@ $debug = array();
 //query the db
 $resTable = $modx->getTableName('mrResources');
 $roomsTable = $modx->getTableName('mrRooms');
-$qstring = '%'.$query.'%';
+
 $debug['query'] = $qstring;
-$sql = "Select ".$resTable.".id, ".$resTable.".name, max_amount, room, Rooms.name as `room_name` from $resTable join $roomsTable as Rooms on room = Rooms.id where $resTable.name like '$qstring' or Rooms.name like '$qstring'";
+$sql = "Select ".$resTable.".id, ".$resTable.".name, max_amount, room, Rooms.name as `room_name` from $resTable join $roomsTable as Rooms on room = Rooms.id where ";
+
+if(!empty($scriptProperties['room'])) {
+	$sql .= "  room = ".$scriptProperties['room']." and ";
+}
+
+	$qstring = '%'.$query.'%';
+	$whereclause = "($resTable.name like '$qstring' or Rooms.name like '$qstring')";
+	$sql .= $whereclause;
+	
+
+
 $debug['sql'] = $sql;
+//return $modx->error->failure($sql);
 $stmt = $modx->prepare($sql);
 $stmtArray = array();
 if ($stmt && $stmt->execute()){

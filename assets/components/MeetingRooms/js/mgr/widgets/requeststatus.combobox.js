@@ -18,7 +18,8 @@ MeetingRooms.combo.RequestStatus = function (config) {
 			
 		,resizeable: false
 		,fieldLabel: _('MeetingRooms.requests_status')
-		,name: 'status'
+		,name: 'status_text'
+		,hiddenName: 'status'
 		,forceSelection: true
 	});
 	MeetingRooms.combo.RequestStatus.superclass.constructor.call(this,config);
