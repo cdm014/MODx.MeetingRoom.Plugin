@@ -19,11 +19,14 @@ function makeRequest() {
 		,params: {
 			action: 'mgr/mrResources/getList'
 			,room: 1
-			,HTTP_MODAUTH: 'modx4ec2d5be8f9134.90501924_14f32d37264bd00.09031560'
+			,HTTP_MODAUTH: MODx.siteId
+		},headers: {
+			'modAuth': MODx.siteId
 		}
 		,method: 'GET'
 		,success: function (result, request) {
-			Ext.MessageBox.alert('Success','Data Returned From Server: '+result.responseText);
+			var test1;
+			//Ext.MessageBox.alert('Success','test1: '+MODx+' Data Returned From Server: '+result.responseText);
 			//this allows us to convert the response to an object
 			eval("resources2 = "+result.responseText.replace("(",'').replace(")",''));
 			resources = resources2;
@@ -33,9 +36,10 @@ function makeRequest() {
 				if (resources.results[resource].max_amount != undefined) {
 					field = new Object();
 					if (resources.results[resource].max_amount < 2) {
-						field.name = resources.results[resource].name;
+						field.fieldLabel = resources.results[resource].name;
+						field.name = resources.results[resource].id;
 						field.xtype = 'checkbox';
-						alert("pause here");
+					//	alert("pause here");
 					} else {
 						field.name = resources.results[resource].name;
 						field.xtype = 'textfield';
@@ -90,27 +94,28 @@ EOS3;
 
 $bottomscripts[] = <<<EOS4
 <script type="text/javascript">
- myform = new Ext.form.FormPanel({
-	renderTo: 'forext'
-	,frame: false
-	,title: 'Resources Requested'
-	,width: 350
-	,defaults: {width: 230}
-	,defaultType: 'checkbox'
-	,items: [{
-		fieldLabel: 'Field1'
-		,name: 'field1'
-	},{
-		xtype: "button"
-		,text: "Add Resources"
-		,listeners: { 
-			'click': {fn: makeRequest}
-		}
-	}]
+function loadform() {
+	if (MODx != undefined) {
+		//alert(MODx.siteId);
+		 myform = new Ext.form.FormPanel({
+			frame: false
+			,title: 'Resources Requested'
+			,width: 350
+			,defaults: {width: 230}
+			,defaultType: 'checkbox'
+			,items: []
 
-	
-});
-myform.on("beforerender", "makeRequest()");
+			
+		});
+		myform.on("beforerender", makeRequest);
+		myform.render('forext');
+	} else {
+		setTimeout("loadform()",1000);
+	}
+}
+window.onload = function(e) {
+	setTimeout("loadform()",1000);
+}
 </script>
 
 EOS4;
@@ -159,6 +164,7 @@ $tests['json'] = '{"total":'.count($list).',"results":'.$jsonresult.'}';
 
 $output .= "<pre>".print_r($tests,true)."</pre>";
 $output .= "<div id='forext'></div>";
+reset($bottomscripts);
 foreach ($bottomscripts as $script) {
 	$output .= $script;
 }

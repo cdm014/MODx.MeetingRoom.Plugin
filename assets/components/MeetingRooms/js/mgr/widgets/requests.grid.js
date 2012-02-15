@@ -183,6 +183,7 @@ MeetingRooms.window.UpdateRequest = function(config) {
 	textvar = '<pre>'+this.config+'</pre>';
 	Ext.applyIf(config,{
 		title: _('MeetingRooms.request_update')
+		,id: 'UpdateRequestWindow'
 		,text: textvar
 		,url: MeetingRooms.config.connectorUrl
 		,baseParams: {
@@ -242,12 +243,46 @@ MeetingRooms.window.UpdateRequest = function(config) {
 			,name: 'requestNumber'
 		},{
 			xtype: 'MeetingRooms-combo-mrRooms'
+			,listeners: {
+				'select': {fn: this.roomChange,scope:this}
+			}
+			
 		},{
 			xtype: 'meetingrooms-combo-requeststatus'
 			,value: this.config.record.status
+		},{
+			xtype: 'fieldset'
+			,id: 'requestedresources'
 		}]
 	});
 	MeetingRooms.window.UpdateRequest.superclass.constructor.call(this,config);
+	this.on("beforeshow", function () { 
+		this.pullResources();
+		return true; 
+	});
+	
 };
-Ext.extend(MeetingRooms.window.UpdateRequest, MODx.Window);
+Ext.extend(MeetingRooms.window.UpdateRequest, MODx.Window,{
+	pullResources: function () {
+	//*
+		if(Ext.getCmp('requestedresources2')) {
+			Ext.getCmp('requestedresources2').destroy();
+		}
+	//*/
+	//alert('test');
+		//*
+		var fset = new Ext.form.FieldSet({
+			id: 'requestedresources2'
+			,renderTo: 'requestedresources'
+		});
+		//*/
+		var test = new Ext.Button ({
+			text: 'test'
+			,renderTo: 'requestedresources2'
+		});
+	}
+	,roomChange: function() {
+		this.pullResources();
+	}
+});
 Ext.reg('MeetingRooms-window-mrRequests-update', MeetingRooms.window.UpdateRequest);
