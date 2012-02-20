@@ -243,6 +243,7 @@ MeetingRooms.window.UpdateRequest = function(config) {
 			,name: 'requestNumber'
 		},{
 			xtype: 'MeetingRooms-combo-mrRooms'
+			,id: 'update-request-room-combo'
 			,listeners: {
 				'select': {fn: this.roomChange,scope:this}
 			}
@@ -253,33 +254,90 @@ MeetingRooms.window.UpdateRequest = function(config) {
 		},{
 			xtype: 'fieldset'
 			,id: 'requestedresources'
+			,items: [{
+				text: 'Show Resources'
+				,xtype: 'button'
+				,listeners: {
+					'click': {fn: this.pullResources, scope: this}
+				}
+			}]
 		}]
 	});
 	MeetingRooms.window.UpdateRequest.superclass.constructor.call(this,config);
 	this.on("beforeshow", function () { 
-		this.pullResources();
+		//this.pullResources();
 		return true; 
 	});
 	
 };
 Ext.extend(MeetingRooms.window.UpdateRequest, MODx.Window,{
 	pullResources: function () {
+	// get rid of old resources
 	//*
 		if(Ext.getCmp('requestedresources2')) {
 			Ext.getCmp('requestedresources2').destroy();
 		}
 	//*/
-	//alert('test');
+	// add new container for resources
 		//*
 		var fset = new Ext.form.FieldSet({
 			id: 'requestedresources2'
 			,renderTo: 'requestedresources'
 		});
+	
 		//*/
-		var test = new Ext.Button ({
-			text: 'test'
-			,renderTo: 'requestedresources2'
+		//alert('before ajax');
+	// add fields to new container
+		var room = Ext.getCmp('update-request-room-combo').getValue();
+		Ext.Ajax.request({
+			url: MeetingRooms.config.connectorUrl
+			,params: {
+				action: 'mgr/mrResources/getList'
+				,room: room
+				,HTTP_MODAUTH: MODx.siteId
+			}
+			,headers: {
+				'modAuth': MODx.siteId
+			}
+			,success: function( result, request) {
+				eval("resources2 = "+result.responseText.replace("(",'').replace(")",''));
+				resources = resources2;
+				fields = new Array();
+				for (resource in resources.results) {
+					if (resources.results[resource].max_amount != undefined) {
+						field = new Object();
+						field.fieldLabel = resources.results[resource].name;
+						field.name = 'rresource_'+resources.results[resource].id;
+						field.id = 'rresource_'+resources.results[resource].id;
+						if (resources.results[resource].max_amount < 2) {
+							
+							field.xtype= 'checkbox';
+						} else {
+							field.fieldLabel = resources.results[resource].name + ' (Maximum: '+resources.results[resource].max_amount +')';
+							field.xtype = 'textfield';
+						}
+						//field.renderTo = 'requestedresources2';
+						/*
+						Ext.getCmp('requestedresources2').add({
+							xtype: 'label'
+							,text: resources.results[resource].name
+							,forId: 'rresource_'+resources.results[resource].id
+						});
+						//*/
+						Ext.getCmp('requestedresources2').add(field);
+						Ext.getCmp('requestedresources2').doLayout();
+					}
+				}
+			}
+			,failure: function( result, request) {
+				alert('ajax failed');
+			}
+			
 		});
+		//alert('after ajax');
+		
+		
+		
 	}
 	,roomChange: function() {
 		this.pullResources();
