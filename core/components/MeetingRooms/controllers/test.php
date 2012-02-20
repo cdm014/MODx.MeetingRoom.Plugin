@@ -41,6 +41,7 @@ function makeRequest() {
 						field.xtype = 'checkbox';
 					//	alert("pause here");
 					} else {
+						field.fieldLabel = resources.results[resource].name;
 						field.name = resources.results[resource].name;
 						field.xtype = 'textfield';
 						
@@ -161,6 +162,44 @@ foreach ($stmtArray[0] as $stmtRes) {
 }
 $jsonresult = json_encode($list);
 $tests['json'] = '{"total":'.count($list).',"results":'.$jsonresult.'}';
+$temp = array();
+$scriptProperties['rresource_1'] = 200;
+$scriptProperties['rresource_3'] = 'on';
+$scriptProperties['id'] = 1;
+$tests['scriptProperties'] = $scriptProperties;
+$keys = array_keys($scriptProperties);
+$tests['keys'] = $keys;
+function resource_field($var) {
+		if (strpos($var,'rresource_') !== false) {
+			return $var;
+		} else { 
+			return false;
+		}
+}
+$resource_keys = array_filter($keys, "resource_field");
+$tests['resource_keys'] = $resource_keys;
+$id = $scriptProperties['id'];
+foreach ($resource_keys as $key) {
+	$myresources[$key] = $scriptProperties[$key];
+	$tests[$key]['value'] = $scriptProperties[$key];
+	$pos = strpos($key,'_');
+	$resId = substr($key,$pos+1);
+	$tests[$key]['resId'] = $resId;
+	$temp = array();
+	$temp['request']= $id;
+	$temp['resource'] = $resId;
+	$temp['amount'] = $scriptProperties[$key];
+	$tests[$key]['temp'] = $temp;
+	$rresource = $modx->getObject('mrRequestedResource',array('request'=>$id,'resource'=> $resId) );
+	$tests[$key]['before'] = empty($rresource);
+	if(empty($rresource)) {
+		$rresource = $modx->newObject('mrRequestedResource');
+	}
+	$tests[$key]['after'] = empty($rresource);
+	
+}
+
+
 
 $output .= "<pre>".print_r($tests,true)."</pre>";
 $output .= "<div id='forext'></div>";
