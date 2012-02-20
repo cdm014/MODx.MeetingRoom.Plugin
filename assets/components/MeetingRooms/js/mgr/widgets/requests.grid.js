@@ -312,6 +312,7 @@ Ext.extend(MeetingRooms.window.UpdateRequest, MODx.Window,{
 						if (resources.results[resource].max_amount < 2) {
 							
 							field.xtype= 'checkbox';
+							field.inputValue = 1;
 						} else {
 							field.fieldLabel = resources.results[resource].name + ' (Maximum: '+resources.results[resource].max_amount +')';
 							field.xtype = 'textfield';

@@ -1,4 +1,15 @@
 <?php
+/*
+Current Status
+Processor saves request Information
+processor saves resource information
+
+To Do:
+Processor needs to delete old resource information
+
+
+*/
+
 //get request
 if (empty($scriptProperties['id'])) return $modx->err->failure($modx->lexicon('MeetingRooms.request_err_ns'));
 $mrRequest = $modx->getObject('mrRequests',$scriptProperties['id']);
@@ -56,6 +67,9 @@ foreach ($resource_keys as $key) {
 	$temp['request'] = $id;
 	$temp['resource'] = $resId;
 	$temp['amount'] = $scriptProperties[$key];
+	if ($scriptProperties[$key] == "on") {
+		$temp['amount'] = 1;
+	}
 	//*
 	//if we have previously put in a value for this, then replace that value
 	$rresource = $modx->getObject('mrRequestedResource', array('request'=>$id,'resource'=>$resId) );
