@@ -145,17 +145,11 @@ Ext.extend(MeetingRooms.grid.Requests, MODx.grid.Grid,{
 			text: _('MeetingRooms.requests_update')
 			,handler: this.updateRequest
 		}
-		,{
-			text: _('MeetingRooms.requests_updateGroup')
-			,handler: this.updateRequestGroup
-		},'-',{
+		,'-',{
 			text: _('MeetingRooms.requests_remove')
 			,handler: this.removeRequest
 		}
-		,{
-			text: _('MeetingRooms.requests_removeGroup')
-			,handler: this.removeRequestGroup
-		}]
+		]
 		this.addContextMenuItem(m);
 		return true;
 	}
@@ -172,6 +166,20 @@ Ext.extend(MeetingRooms.grid.Requests, MODx.grid.Grid,{
 			this.updateRequestWindow.setValues(this.menu.record);
 		}
 		this.updateRequestWindow.show(e.target);
+	}
+	,removeRequest: function() {
+		MODx.msg.confirm({
+			title: _('MeetingRooms.request_remove')
+			,text: _('MeetingRooms.request_remove_confirm')
+			,url: this.config.url
+			,params: {
+				action: 'mgr/mrRequests/remove'
+				,id: this.menu.record.id
+			}
+			,listeners: {
+				'success': {fn: this.refresh, scope: this}
+			}
+		});
 	}
 	
 });
@@ -253,7 +261,7 @@ MeetingRooms.window.UpdateRequest = function(config) {
 			,value: this.config.record.status
 		},{
 			xtype: 'fieldset'
-			,id: 'requestedresources'
+			,id: 'update-requestedresources'
 			,items: [{
 				text: 'Show Resources'
 				,xtype: 'button'
@@ -282,7 +290,7 @@ Ext.extend(MeetingRooms.window.UpdateRequest, MODx.Window,{
 		//*
 		var fset = new Ext.form.FieldSet({
 			id: 'requestedresources2'
-			,renderTo: 'requestedresources'
+			,renderTo: 'update-requestedresources'
 		});
 	
 		//*/
@@ -345,3 +353,215 @@ Ext.extend(MeetingRooms.window.UpdateRequest, MODx.Window,{
 	}
 });
 Ext.reg('MeetingRooms-window-mrRequests-update', MeetingRooms.window.UpdateRequest);
+/* 
+	window to put in a new request
+	many of the fields call this.clearGroup because if this field is changing
+	then the requester is a new person and a new groupID should be generated
+*/
+MeetingRooms.window.CreateRequest = function (config) {
+	config = config || {};
+	this.config = config;
+	Ext.applyIf(config,{
+		title: _('MeetingRooms.request_create')
+		,url: MeetingRooms.config.connectorUrl
+		,baseParams: {
+			action: 'mgr/mrRequests/create'
+		}
+		,fields: [{
+			xtype: 'textfield'
+			,name: 'name'
+			,id: 'requesterName'
+			,fieldLabel: _('MeetingRooms.request_name')
+			,width: 300
+			,listeners: { 
+				'change': {fn: this.clearGroup, scope: this}
+			}
+		},{
+			xtype: 'textfield'
+			,name: 'libraryCard'
+			,fieldLabel: _('MeetingRooms.requester_id')
+			,width: 300
+			,listeners: { 
+				'change': {fn: this.clearGroup, scope: this}
+			}
+		},{
+			xtype: 'textfield'
+			,name: 'email'
+			,fieldLabel: _('MeetingRooms.request_email')
+			,width: 100
+			,listeners: { 
+				'change': {fn: this.clearGroup, scope: this}
+			}
+		},{
+			xtype: 'textfield'
+			,name: 'phone'
+			,fieldLabel: _('MeetingRooms.request_phone')
+			,width: 100
+			,listeners: { 
+				'change': {fn: this.clearGroup, scope: this}
+			}
+		},{
+			xtype: 'textfield'
+			,name: 'group'
+			,id: 'requesterGroup'
+			,fieldLabel: _('MeetingRooms.request_group')
+			,width: 300
+			,listeners: { 
+				'change': {fn: this.clearGroup, scope: this}
+			}
+		},{
+			xtype: 'textfield'
+			,name: 'meetingType'
+			,fieldLabel: _('MeetingRooms.request_meeting_type')
+			,width: 300
+			,listeners: { 
+				'change': {fn: this.clearGroup, scope: this}
+			}
+		},{
+			xtype: 'datefield'
+			,name: 'startDate'
+			,fieldLabel: _('MeetingRooms.request_start_date')
+			
+			,format: 'Y-m-d'
+		},{
+			xtype: 'timefield'
+			,name: 'startTime'
+			,fieldLabel: _('MeetingRooms.request_start_time')
+			
+		},{
+			xtype: 'timefield'
+			,name: 'endTime'
+			,fieldLabel: _('MeetingRooms.request_end_time')
+			
+		},{
+			xtype: 'textfield'
+			,name: 'requestNumber'
+			,id: 'requestNumber'
+			,width: 250
+			,fieldLabel: _('MeetingRooms.request_requestNumber')
+		},{
+			xtype: 'button'
+			,text: 'Generate new Request Number'
+			,listeners: {
+				'click': {fn: this.newRequestNumber, scope: this}
+			}
+		},{
+			xtype: 'MeetingRooms-combo-mrRooms'
+			,id: 'Create-request-room-combo'
+			,width: 300
+			,listeners: {
+				'select': {fn: this.roomChange,scope:this}
+			}
+			
+		},{
+			xtype: 'fieldset'
+			,id: 'create-requestedresources'
+			,items: [{
+				text: 'Show Resources'
+				,xtype: 'button'
+				,listeners: {
+					'click': {fn: this.pullResources, scope: this}
+				}
+			}]
+		}]
+			
+	});
+	MeetingRooms.window.CreateRequest.superclass.constructor.call(this,config);
+	
+}
+
+Ext.extend(MeetingRooms.window.CreateRequest, MODx.Window,{
+	clearGroup: function () {
+		var groupfield = Ext.getCmp('requestNumber').setValue('');
+	}
+	,newRequestNumber: function () {
+		var newIdRequest = Ext.Ajax.request({
+			url: MeetingRooms.config.connectorUrl
+			,params: {
+				action: 'mgr/mrRequests/uniqid'
+				,name: Ext.getCmp('requesterName').getValue()
+				,group: Ext.getCmp('requesterGroup').getValue()
+			}
+			,headers: {
+				'modAuth': MODx.siteId
+			}
+			,success: function (result, request) {
+				Ext.getCmp('requestNumber').setValue(result.responseText)
+			}
+			
+		});
+	}
+	,pullResources: function () {
+	// get rid of old resources
+	//*
+		if(Ext.getCmp('requestedresources2')) {
+			Ext.getCmp('requestedresources2').destroy();
+		}
+	//*/
+	// add new container for resources
+		//*
+		var fset = new Ext.form.FieldSet({
+			id: 'requestedresources2'
+			,renderTo: 'create-requestedresources'
+		});
+	
+		//*/
+		//alert('before ajax');
+	// add fields to new container
+		var room = Ext.getCmp('update-request-room-combo').getValue();
+		Ext.Ajax.request({
+			url: MeetingRooms.config.connectorUrl
+			,params: {
+				action: 'mgr/mrResources/getList'
+				,room: room
+				,HTTP_MODAUTH: MODx.siteId
+			}
+			,headers: {
+				'modAuth': MODx.siteId
+			}
+			,success: function( result, request) {
+				eval("resources2 = "+result.responseText.replace("(",'').replace(")",''));
+				resources = resources2;
+				fields = new Array();
+				for (resource in resources.results) {
+					if (resources.results[resource].max_amount != undefined) {
+						field = new Object();
+						field.fieldLabel = resources.results[resource].name;
+						field.name = 'rresource_'+resources.results[resource].id;
+						field.id = 'rresource_'+resources.results[resource].id;
+						if (resources.results[resource].max_amount < 2) {
+							
+							field.xtype= 'checkbox';
+							field.inputValue = 1;
+						} else {
+							field.fieldLabel = resources.results[resource].name + ' (Maximum: '+resources.results[resource].max_amount +')';
+							field.xtype = 'textfield';
+						}
+						//field.renderTo = 'requestedresources2';
+						/*
+						Ext.getCmp('requestedresources2').add({
+							xtype: 'label'
+							,text: resources.results[resource].name
+							,forId: 'rresource_'+resources.results[resource].id
+						});
+						//*/
+						Ext.getCmp('requestedresources2').add(field);
+						Ext.getCmp('requestedresources2').doLayout();
+					}
+				}
+			}
+			,failure: function( result, request) {
+				alert('ajax failed');
+			}
+			
+		});
+		//alert('after ajax');
+		
+		
+		
+	}
+	,roomChange: function() {
+		this.pullResources();
+	}
+});
+Ext.reg('MeetingRooms-window-request-create', MeetingRooms.window.CreateRequest);

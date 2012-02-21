@@ -72,7 +72,7 @@ EOS;
 $bottomscripts [] = $script2;
 $bottomscripts[] = <<<EOS3
 <script type='text/javascript'>
-alert(resources);
+//alert(resources);
 fields = new Array();
 for (resource in resources.results) {
 	if (resources.results[resource].max_amount != undefined) {
@@ -110,6 +110,17 @@ function loadform() {
 		});
 		myform.on("beforerender", makeRequest);
 		myform.render('forext');
+		var test2 = Ext.Ajax.request ({
+			url: MeetingRooms.config.connectorUrl
+			,params: {
+				action: 'mgr/mrRequests/uniqid'
+				,room: 1
+				,HTTP_MODAUTH: MODx.siteId
+			}
+			,headers: {
+				'modAuth': MODx.siteId
+			}
+		});
 	} else {
 		setTimeout("loadform()",1000);
 	}
