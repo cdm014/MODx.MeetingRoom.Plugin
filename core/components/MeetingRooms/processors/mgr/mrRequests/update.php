@@ -1,13 +1,10 @@
 <?php
 /*
-Current Status
+mrRequests update processor
+
 Processor saves request Information
 processor saves resource information
-
-To Do:
-Processor needs to delete old resource information
-
-
+Processor deletes old resource information
 */
 
 //get request
@@ -86,6 +83,24 @@ foreach ($resource_keys as $key) {
 	if ($modx->error->hasError()) { return $modx->error->failure();}
 	
 }
+//pull resources to see which ones need to be deleted
+
+$c = $modx->newQuery('mrRequestedResource');
+//set criteria that they match the current meeting request
+
+$c->where(array('request'=>$id));
+
+$requestedresources = $modx->getIterator('mrRequestedResource',$c);
+//loop through to check if we have a value for that field
+foreach ($requestedresources as $resource) {
+//
+	$resourceId = $resource->get('resource');
+	$fieldname = 'rresource_'.$resourceId;
+	if ((!(array_key_exists($fieldname, $scriptProperties)))||$scriptProperties[$fieldname] == 0) {
+		$resource->remove();
+	}
+}
+
 
 
 return $modx->error->success('',$mrRequest);

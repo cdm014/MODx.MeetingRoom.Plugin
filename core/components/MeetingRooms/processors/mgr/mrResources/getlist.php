@@ -1,4 +1,8 @@
 <?php
+/*
+ mrResources getlist processor
+ 
+ */
 $isLimit = !empty($scriptProperties['limit']);
 $start = $modx->getOption('start',$scriptProperties,0);
 $limit = $modx->getOption('limit',$scriptProperties,10);
