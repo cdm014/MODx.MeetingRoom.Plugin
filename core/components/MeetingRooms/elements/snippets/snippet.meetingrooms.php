@@ -33,4 +33,6 @@ $output .= print_r($modx->packages,true);
 $rooms = $modx->getCollection('mrRooms');
 $output .= "\ncount: ".count($rooms);
 $output .= "</pre>";
+
+
 return $output;
