@@ -31,10 +31,11 @@ if (strpos($type,'request') !== false) {
 	$response['total'] = count($requests);
 	$response['results'] = array();
 	foreach ($requests as $request) {
-		$response['items'][] = $request->toArray();
+		$response['results'][] = $request->toArray();
 	
 	}
-	$output = json_encode($response);
+	$output = json_encode($response['results']);
+	return $output;
 	
 } elseif (strpos($type,'room') !== false) {
 	//looking for room data
