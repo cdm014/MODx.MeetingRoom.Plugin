@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package MeetingRooms
+ */
 $xpdo_meta_map['mrRequests']= array (
   'package' => 'MeetingRooms',
   'version' => '1.1',

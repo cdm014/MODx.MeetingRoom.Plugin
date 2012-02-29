@@ -1,2 +1,6 @@
 <?php
-class mrResources extends XPDOSimpleObject {}
+/**
+ * @package MeetingRooms
+ */
+ class mrResources extends XPDOSimpleObject {}
+ ?>
