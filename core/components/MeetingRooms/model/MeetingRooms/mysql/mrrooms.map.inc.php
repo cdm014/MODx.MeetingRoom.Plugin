@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package MeetingRooms
+ */
 $xpdo_meta_map['mrRooms']= array (
   'package' => 'MeetingRooms',
   'version' => '1.1',
@@ -7,6 +10,7 @@ $xpdo_meta_map['mrRooms']= array (
   array (
     'name' => '',
     'address' => '',
+    'description' => '',
   ),
   'fieldMeta' => 
   array (
@@ -23,6 +27,13 @@ $xpdo_meta_map['mrRooms']= array (
       'dbtype' => 'tinytext',
       'phptype' => 'string',
       'null' => false,
+      'default' => '',
+    ),
+    'description' => 
+    array (
+      'dbtype' => 'text',
+      'phptype' => 'string',
+      'null' => true,
       'default' => '',
     ),
   ),

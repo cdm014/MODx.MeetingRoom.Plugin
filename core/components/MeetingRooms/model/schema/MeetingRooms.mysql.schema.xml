@@ -3,6 +3,7 @@
 	<object class="mrRooms" table="mr_rooms" extends="XPDOSimpleObject">
 		<field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
 		<field key="address" dbtype="tinytext" phptype="string" null="false" default="" />
+		<field key="description" dbtype="text" phptype="string" null="true" default="" />
 		
 		<index alias="name" name="name" primary="false" unique="false" type="BTREE">
 			<column key="name" length="" collation="A" null="false" />
