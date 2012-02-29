@@ -123,7 +123,12 @@ MeetingRooms.window.UpdateRoom = function(config) {
             ,fieldLabel: _('MeetingRooms.address')
             ,name: 'address'
             ,width: 300
-        }]
+        },{
+			xtype: 'textarea'
+			,fieldLabel: _('MeetingRooms.room_description')
+			,name: 'description'
+			,width: 300
+		}]
     });
     MeetingRooms.window.UpdateRoom.superclass.constructor.call(this,config);
 };
@@ -147,6 +152,11 @@ MeetingRooms.window.CreateRoom = function(config) {
 			xtype: 'textarea'
 			,fieldLabel: _('MeetingRooms.address')
 			,name: 'address'
+			,width: 300
+		},{
+			xtype: 'textarea'
+			,fieldLabel: _('MeetingRooms.room_description')
+			,name: 'description'
 			,width: 300
 		}]
 	});

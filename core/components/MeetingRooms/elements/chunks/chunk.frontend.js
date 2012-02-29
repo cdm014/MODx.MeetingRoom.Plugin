@@ -29,18 +29,20 @@ $(document).ready(function() {
 			$("#roomTable").remove();
 			$("#requestdiv").prepend('<h1>Available Meeting Rooms</h1><table id="roomTable"></table>');
 			
-			$("#roomTable").html('<thead><tr><th>Room Name</th><th>Address</th></tr></thead>');
+			$("#roomTable").html('<thead><tr><th>Room Name</th><th>Address</th><th>Description</th></tr></thead>');
 			
 			
 			for (x in data) {
 				var room = data[x];
-				$("#roomTable").append('<tr><td>'+room.name+'</td><td>'+room.address+'</td></tr>');
+				$("#roomTable").append('<tr><td>'+room.name+'</td><td>'+room.address+'</td><td>'+room.description+'</td></tr>');
 				$("#room").append('<option value="'+room.id+'">'+room.name+'</option>');
 			}
 			$("#room").width($("#room").width());
 		}
 	});
 	$("#room").on("change", updateTable);
+	
+	
 	
 });
 
