@@ -46,3 +46,4 @@ $_lang['MeetingRooms.request_start_time'] = 'Start time of request';
 $_lang['MeetingRooms.request_end_date'] = 'End Date';
 $_lang['MeetingRooms.request_end_time'] = 'End time of request';
 $_lang['MeetingRooms.request_requestNumber'] = 'Request Group Id';
+$_lang['MeetingRooms.room_description'] = 'Description of Room';

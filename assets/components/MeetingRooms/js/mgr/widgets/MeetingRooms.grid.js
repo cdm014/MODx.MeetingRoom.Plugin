@@ -119,16 +119,30 @@ MeetingRooms.window.UpdateRoom = function(config) {
             ,name: 'name'
             ,width: 300
         },{
-            xtype: 'textarea'
+            xtype: 'htmleditor'
+			,enableFont: false
+			,enableColors: false
+			,enableAlignments: false
+			,enableFontSize: false
+			,enableLinks: false
+			
             ,fieldLabel: _('MeetingRooms.address')
             ,name: 'address'
             ,width: 300
         },{
-			xtype: 'textarea'
+
+			xtype: 'htmleditor'
 			,fieldLabel: _('MeetingRooms.room_description')
 			,name: 'description'
 			,width: 300
+			,enableFont: false
+			,enableColors: false
+			,enableAlignments: false
+			,enableFontSize: false
+			,enableLinks: false
 		}]
+		,
+
     });
     MeetingRooms.window.UpdateRoom.superclass.constructor.call(this,config);
 };
