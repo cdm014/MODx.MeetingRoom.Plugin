@@ -199,6 +199,7 @@ MeetingRooms.window.UpdateRequest = function(config) {
 		}
 		,fields: [{
 			xtype: 'hidden'
+			,id: 'requestId'
 			,name: 'id'
 		},{
 			xtype: 'textfield'
@@ -300,9 +301,10 @@ Ext.extend(MeetingRooms.window.UpdateRequest, MODx.Window,{
 		Ext.Ajax.request({
 			url: MeetingRooms.config.connectorUrl
 			,params: {
-				action: 'mgr/mrResources/getList'
+				action: 'mgr/mrRequestedResources/getlist'
 				,room: room
 				,HTTP_MODAUTH: MODx.siteId
+				,id: Ext.getCmp('requestId').getValue()
 			}
 			,headers: {
 				'modAuth': MODx.siteId
@@ -325,6 +327,7 @@ Ext.extend(MeetingRooms.window.UpdateRequest, MODx.Window,{
 							field.fieldLabel = resources.results[resource].name + ' (Maximum: '+resources.results[resource].max_amount +')';
 							field.xtype = 'textfield';
 						}
+						field.value = resources.results[resource].amount;
 						//field.renderTo = 'requestedresources2';
 						/*
 						Ext.getCmp('requestedresources2').add({
