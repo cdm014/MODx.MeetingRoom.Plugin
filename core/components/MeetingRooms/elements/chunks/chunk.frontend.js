@@ -59,17 +59,22 @@ function updateTable() {
 		,success: function(data) {
 			var test = eval(data);
 			//alert(data);
+			var m_names = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
 			$("#requestTable").remove();
 			$("#requestdiv").append('<table id="requestTable"></table>');
 			$("#requestTable").html('<thead><tr><th>Date</th><th>From</th><th>To</th><th>Reserved By</th></tr></thead>');
 			for (x in test) {
 				var startsplit = test[x].start.split(' ');
 				var endsplit = test[x].end.split(' ');
-				$("#requestTable").append('<tr><td>'+startsplit[0]+'</td><td>'+startsplit[1]+'</td><td>'+endsplit[1]+'</td><td>'+test[x].group+'</td></tr>');
+				var date = new Date (startsplit[0]);
+				var dateString = m_names[date.getMonth()]+' '+date.getDate()+', '+date.getFullYear();
+				$("#requestTable").append('<tr><td>'+dateString+'</td><td>'+startsplit[1]+'</td><td>'+endsplit[1]+'</td><td>'+test[x].group+'</td></tr>');
 			}
 			
 		}
 	});
 }
 updateTable();
+
+
 </script>
