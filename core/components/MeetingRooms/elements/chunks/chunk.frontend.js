@@ -61,9 +61,11 @@ function updateTable() {
 			//alert(data);
 			$("#requestTable").remove();
 			$("#requestdiv").append('<table id="requestTable"></table>');
-			$("#requestTable").html('<thead><tr><th>From</th><th>To</th><th>Reserved By</th></tr></thead>');
+			$("#requestTable").html('<thead><tr><th>Date</th><th>From</th><th>To</th><th>Reserved By</th></tr></thead>');
 			for (x in test) {
-				$("#requestTable").append('<tr><td>'+test[x].start+'</td><td>'+test[x].end+'</td><td>'+test[x].group+'</td></tr>');
+				var startsplit = test[x].start.split(' ');
+				var endsplit = test[x].end.split(' ');
+				$("#requestTable").append('<tr><td>'+startsplit[0]+'</td><td>'+startsplit[1]+'</td><td>'+endsplit[1]+'</td><td>'+test[x].group+'</td></tr>');
 			}
 			
 		}
