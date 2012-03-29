@@ -66,12 +66,20 @@ MeetingRooms.grid.Requests = function(config) {
 			//is the best compromise
 			,handler: { xtype: 'MeetingRooms-window-request-create',blankValues: false}
 		},'->',{
+			xtype: 'label'
+			,text: 'Filter by Room: '
+			,forId: 'room'
+		},{
 			xtype: 'MeetingRooms-combo-mrRooms'
 			,fieldLabel: _('MeetingRooms.name')
 			,hideLabel: false
 			,listeners: {
 				'select': {fn: this.roomChange,scope:this}
 			}
+		},{
+			xtype: 'label'
+			,text: 'Filter by Date: '
+			
 		},{
 			xtype: 'datefield'
 			,id: 'date'
@@ -323,6 +331,9 @@ Ext.extend(MeetingRooms.window.UpdateRequest, MODx.Window,{
 							
 							field.xtype= 'checkbox';
 							field.inputValue = 1;
+							if (resources.results[resource].amount > 0) {
+								field.checked = true;
+							}
 						} else {
 							field.fieldLabel = resources.results[resource].name + ' (Maximum: '+resources.results[resource].max_amount +')';
 							field.xtype = 'textfield';
@@ -511,7 +522,7 @@ Ext.extend(MeetingRooms.window.CreateRequest, MODx.Window,{
 		//*/
 		//alert('before ajax');
 	// add fields to new container
-		var room = Ext.getCmp('update-request-room-combo').getValue();
+		var room = Ext.getCmp('Create-request-room-combo').getValue();
 		Ext.Ajax.request({
 			url: MeetingRooms.config.connectorUrl
 			,params: {

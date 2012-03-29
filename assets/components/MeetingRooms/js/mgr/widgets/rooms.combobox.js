@@ -10,7 +10,7 @@ MeetingRooms.combo.mrRooms = function(config) {
 		,hiddenName: 'room'
 		,hiddenValue: 1
 		,hiddenId: 'room'
-		,value: 1
+		
 	});
 	 MeetingRooms.combo.mrRooms.superclass.constructor.call(this,config);
 };

@@ -34,7 +34,12 @@ MeetingRooms.grid.Resources = function(config) {
 			text: _('MeetingRooms.resource_create')
 			,handler: {xtype: 'MeetingRooms-window-resource-create',blankValues: true}
 		},{
+			xtype: 'label'
+			,text: 'Filter by Resource Name: '
+			,forId: 'Resources-search-filter'
+		},{
 			xtype: 'textfield'
+			,fieldLabel: 'Filter by Resource Name: '
 			,id: 'Resources-search-filter'
 			,emptyText: _('MeetingRooms.search...')
 			,listeners: {
@@ -52,10 +57,16 @@ MeetingRooms.grid.Resources = function(config) {
 				}, scope:this}
 			}
 		},{
+			xtype: 'label'
+			,text: 'Filter by Room: '
+			,forId: 'room'
+		},{
 			xtype: 'MeetingRooms-combo-mrRooms'
+			
 			,listeners: {
 				'select': {fn: this.roomSearch,scope:this}
 			}
+			,fieldLabel: 'Filter by Room'
 		},'->',{
 			text: 'Clear Search'
 			,listeners: {
