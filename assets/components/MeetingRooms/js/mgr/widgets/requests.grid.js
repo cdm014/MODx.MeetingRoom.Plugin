@@ -7,7 +7,7 @@ MeetingRooms.grid.Requests = function(config) {
 		id: 'MeetingRooms-grid-Requests'
 		,url: MeetingRooms.config.connectorUrl
 		,baseParams: { 
-			action: 'mgr/mrRequests/getlist'
+			action: 'mgr/mrRequests/getlist' 
 			,date: new Date()
 		}
 		,fields: ['id','name','libraryCard','email','phone','group','meetingType','start','end','requestNumber','room','room_name','status']

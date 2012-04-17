@@ -80,7 +80,7 @@ Ext.extend(MeetingRooms.panel.Calendar, MODx.Panel, {
 				columns: 7
 			}
 			,defaults: {
-				bodyStyle: 'padding: 20px'
+				bodyStyle: 'padding: 20px; '
 			}
 			,width: 700
 			,items: [
@@ -115,7 +115,7 @@ Ext.extend(MeetingRooms.panel.Calendar, MODx.Panel, {
 		var days = dayspermonth[month];
 		var startOfMonth = new Date (year, month, 1);
 		if (startOfMonth.getDay() > 0) {
-			cpanel.add({ html: '<p>Previous Month</p>', colspan: startOfMonth.getDay()});
+			cpanel.add({ html: '<p>Previous Month</p>', colspan: startOfMonth.getDay(), border: false});
 		}
 		var daycount = 1;
 		while (daycount <= days) {
@@ -128,18 +128,21 @@ Ext.extend(MeetingRooms.panel.Calendar, MODx.Panel, {
 			cpanel.add(new Ext.Container({
 				//must get daycount to show both digits
 				id: year+'-'+df.getValue().format('m')+'-'+tempday,
-				autoEl:'div',
+				autoEl: 'div',
+				
 				items: [
 					{
 						html: '<p>'+daycount+'</p>'
-					}]
+						,border: false
+					}],
+				ctCls: 'calendar-day',
+				
 				
 			}));
 			daycount++;
 		
 		}
-		var idTest = startOfMonth.format('Y-m-d');
-		var day1 = Ext.getCmp(idTest);
+		
 		
 		
 		Ext.getCmp('CalendarWrapper').add(cpanel);

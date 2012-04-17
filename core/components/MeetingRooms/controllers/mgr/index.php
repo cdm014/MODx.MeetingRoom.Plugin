@@ -16,7 +16,7 @@ $modx->regClientStartupScript($mrManager->config['jsUrl'].'mgr/widgets/requests.
 $modx->regClientStartupScript($mrManager->config['jsUrl'].'mgr/widgets/home.panel.js');
 //load mgr/widgets/calendar.js from our assets {this is the new calendar view}
 $modx->regClientStartupScript($mrManager->config['jsUrl'].'mgr/widgets/calendar.js');
-
+$modx->regClientCSS($mrManager->config['cssUrl'].'mgr/mgr.css');
 
 $modx->regClientStartupScript($mrManager->config['jsUrl'].'mgr/sections/index.js');
 $output = '';
