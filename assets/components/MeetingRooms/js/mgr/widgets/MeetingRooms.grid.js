@@ -141,7 +141,7 @@ MeetingRooms.window.UpdateRoom = function(config) {
 			,enableFontSize: false
 			,enableLinks: false
 		}]
-		,
+		
 
     });
     MeetingRooms.window.UpdateRoom.superclass.constructor.call(this,config);
