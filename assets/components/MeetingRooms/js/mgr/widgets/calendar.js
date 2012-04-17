@@ -31,9 +31,10 @@ MeetingRooms.panel.Calendar = function(config) {
 			xtype: 'MeetingRooms-combo-mrRooms'
 			,fieldLabel: _('MeetingRooms.name')
 			,hideLabel: false
+			,id: 'Calendar-Room-Select'
 		},{
 			xtype: 'textfield'
-			,id: 'Requests-search-filter'
+			,id: 'Calendar-search-filter'
 			,emptyText: _('MeetingRooms.search...')
 			,listeners: {
 				'change': {fn: this.search, scope:this}
@@ -147,6 +148,10 @@ Ext.extend(MeetingRooms.panel.Calendar, MODx.Panel, {
 		
 		Ext.getCmp('CalendarWrapper').add(cpanel);
 		Ext.getCmp('CalendarWrapper').doLayout();
+		//finish getting search criteria
+		var room = Ext.getCmp('Calendar-Room-Select').getValue();
+		var search = Ext.getCmp('Calendar-search-filter').getValue();
+		
 		
 	}
 });

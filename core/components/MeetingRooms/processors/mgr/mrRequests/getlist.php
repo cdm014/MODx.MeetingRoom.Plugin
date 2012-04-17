@@ -10,6 +10,7 @@ $dir = $modx->getOption('dir',$scriptProperties,'ASC');
 $query = $modx->getOption('query',$scriptProperties,'');
 $room = $modx->getOption('room',$scriptProperties,'');
 $date = $modx->getOption('date',$scriptProperties, '');
+$end = $modx->getOption('end', $scriptProperties,null);
 function debug_msg($array) {
 	return '<pre>'.print_r($array,true).'</pre>';
 }
@@ -54,6 +55,14 @@ if (!empty($date)) {
 		'start:>=' => $date
 	), xPDOQuery::SQL_AND);
 }
+//*
+if (!empty($end) && $end != null) {
+	$c->where(array(
+		'end:>=' => $end
+	), xPDOQuery::SQL_AND);
+}
+
+//*/
 $count = $modx->getCount('mrRequests',$c);
 $c->sortby($sort,$dir);
 
