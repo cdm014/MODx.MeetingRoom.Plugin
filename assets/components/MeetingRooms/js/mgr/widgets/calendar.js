@@ -168,23 +168,24 @@ Ext.extend(MeetingRooms.panel.Calendar, MODx.Panel, {
 					'modAuth': MODx.siteId
 				}
 				,success: function (result, request) {
-					alert("Ajax Succeeded");
+					//alert("Ajax Succeeded");
 					eval ("requests2 = "+result.responseText.replace("(",'').replace(")",''));
 					requests = requests2;
+					if (requests.total == "0") {
+						alert("No Requests for this room this month");
+					}
 					for ( request in requests.results) {
 						requestData = requests.results[request];
 						requestStart = new Date(requestData.start.split(" ")[0]);
 						requestEnd = new Date(requestData.end);
 						id = requestStart.format('Y-m-d');
 						$day = Ext.getCmp(id);
-						mystring = requestData.start.split(" ")[1]+" - "+requestData.end.split(" ")[1]+" -- "+requestData.group;
+						mystring = requestData.start.split(" ")[1]+" - "+requestData.end.split(" ")[1]+" -- "+requestData.room_name;
 						$day.add({html: mystring});
 						$day.doLayout();
 						
 					}
-					if (requests.total == 0) {
-						alert("No Requests for this room this month");
-					}
+					
 				}
 				,failure: function (result, request) {
 					alert("Cannot access request data. Please contact Webmaster.");
