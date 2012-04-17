@@ -22,6 +22,14 @@ MeetingRooms.panel.Home = function(config) {
 			,defaults: {border: false ,autoHeight: true }
 			,border: true
 			,items: [{
+				title: 'Calendar View'
+				,items: [{
+					xtype: 'MeetingRooms-panel-calendar'
+				},{
+					html: '<p>Calendar View</p>'
+				}]
+				
+			},{
 				title: _('MeetingRooms')
 				,defaults: { autoHeight: true }
 				,items: [{

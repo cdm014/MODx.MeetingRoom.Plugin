@@ -54,7 +54,7 @@ if (!empty($date)) {
 		'start:>=' => $date
 	), xPDOQuery::SQL_AND);
 }
-$count = $modx->getCount('mrRequess',$c);
+$count = $modx->getCount('mrRequests',$c);
 $c->sortby($sort,$dir);
 
 if ($isLimit) $c->limit($limit,$start);

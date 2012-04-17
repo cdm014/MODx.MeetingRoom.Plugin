@@ -14,6 +14,9 @@ $modx->regClientStartupScript($mrManager->config['jsUrl'].'mgr/widgets/resources
 $modx->regClientStartupScript($mrManager->config['jsUrl'].'mgr/widgets/requests.grid.js');
 //load mgr/widgets/home.panel.js from our assets
 $modx->regClientStartupScript($mrManager->config['jsUrl'].'mgr/widgets/home.panel.js');
+//load mgr/widgets/calendar.js from our assets {this is the new calendar view}
+$modx->regClientStartupScript($mrManager->config['jsUrl'].'mgr/widgets/calendar.js');
+
 
 $modx->regClientStartupScript($mrManager->config['jsUrl'].'mgr/sections/index.js');
 $output = '';
@@ -24,6 +27,6 @@ $output = '';
  * which will render the UI
  */
 
-$output .= '<div id="MeetingRooms-panel-home-div"></div><p>controllers/mgr/index.php</p>';
+$output .= '<div id="MeetingRooms-panel-home-div"></div>';
 
 return $output;
