@@ -9,7 +9,7 @@ MeetingRooms.panel.Calendar = function(config) {
 		,defaults: {
 			bodyStyle: 'padding:20px'
 		}
-		,width: 700
+		,width: 900
 		,id: 'CalendarWrapper'
 		,tbar: [{
 			text: _('MeetingRooms.requests_create')
@@ -58,7 +58,7 @@ MeetingRooms.panel.Calendar = function(config) {
 		
 		}
 		]
-		,items: {}
+		
 		
 	});
 	MeetingRooms.panel.Calendar.superclass.constructor.call(this,config);
@@ -67,7 +67,7 @@ MeetingRooms.panel.Calendar = function(config) {
 		return true;
 	});
 }
-Ext.extend(MeetingRooms.panel.Calendar, MODx.Panel, {
+Ext.extend(MeetingRooms.panel.Calendar, MODx.Panel, {	
 	getRequests: function () {
 		//destroy the old calendar
 		if (Ext.getCmp('RequestCalendar')) {
@@ -83,7 +83,7 @@ Ext.extend(MeetingRooms.panel.Calendar, MODx.Panel, {
 			,defaults: {
 				bodyStyle: 'padding: 20px; '
 			}
-			,width: 700
+			,width: 900
 			,items: [
 			{
 				html: '<h1>Sunday</h1>'
@@ -174,15 +174,47 @@ Ext.extend(MeetingRooms.panel.Calendar, MODx.Panel, {
 					if (requests.total == "0") {
 						alert("No Requests for this room this month");
 					}
+					delete MeetingRooms.calendarRecords;
+					MeetingRooms.calendarRecords = new Array();
 					for ( request in requests.results) {
 						requestData = requests.results[request];
 						requestStart = new Date(requestData.start.split(" ")[0]);
 						requestEnd = new Date(requestData.end);
 						id = requestStart.format('Y-m-d');
 						$day = Ext.getCmp(id);
-						mystring = requestData.start.split(" ")[1]+" - "+requestData.end.split(" ")[1]+" -- "+requestData.room_name;
-						$day.add({html: mystring});
+						mystring = requestData.start.split(" ")[1]+" - "+requestData.room_name;
+						var tempPanel = {
+							xtype: 'button',
+							text: mystring,
+							id: "request-"+requestData.id,
+							scale: 'large',
+							height: 32,
+							handler: function(btn, event) {
+								var myId = this.getId();
+								var requestId = myId.split("-")[1];
+								var record = MeetingRooms.calendarRecords[requestId];
+								if(!this.updateRequestWindow) {
+									this.updateRequestWindow = MODx.load({
+										xtype: 'MeetingRooms-window-mrRequests-update'
+										,id: 'calendar-update-Window'
+										,record: record
+										,listeners: {
+											'success': {fn: MeetingRooms.panel.Calendar.getRequests, scope:this}
+										}
+									});
+								} else {
+									this.updateRequestWindow.setValues(record);
+								}
+								this.updateRequestWindow.show(event.target);
+							}
+							
+							
+						};
+						
+						
+						$day.add(tempPanel);
 						$day.doLayout();
+						MeetingRooms.calendarRecords[requestData.id] = requestData;
 						
 					}
 					

@@ -165,6 +165,7 @@ Ext.extend(MeetingRooms.grid.Requests, MODx.grid.Grid,{
 		if(!this.updateRequestWindow) {
 			this.updateRequestWindow = MODx.load({
 				xtype: 'MeetingRooms-window-mrRequests-update'
+				,id: 'requests-grid-update-window'
 				,record: this.menu.record
 				,listeners: {
 					'success': {fn:this.refresh,scope:this}
@@ -260,7 +261,7 @@ MeetingRooms.window.UpdateRequest = function(config) {
 			,name: 'requestNumber'
 		},{
 			xtype: 'MeetingRooms-combo-mrRooms'
-			,id: 'update-request-room-combo'
+			,id: this.getId()+'-combo-mrRooms'
 			,listeners: {
 				'select': {fn: this.roomChange,scope:this}
 			}
