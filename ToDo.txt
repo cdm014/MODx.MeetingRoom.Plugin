@@ -1,0 +1,22 @@
+/*********************************
+* Meeting Room Manager To Do List
+**********************************/
+
+
+/***********************
+	1.	Calendar.js
+			a. 	Hook Add a New Request button up to form
+			b. Handler for clear Search button
+			c. 	Handler for Meetingroom dropdown in Calendar Wrapper
+			d. 	Figure out way to destroy Requests from Calendar
+	2.	Figure out recurring requests
+			a. 	edit creation form to add fields to specify recurrence
+			b. 	change create processor to handle recurrence options
+	3.	Figure out editing options for recurrence
+			a.	What can change for the whole series
+				i.	approval
+				ii.	deletion
+				iii.	start time
+				iv.	end time
+				v.	requester data?
+*/
