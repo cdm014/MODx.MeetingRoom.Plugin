@@ -13,6 +13,9 @@ MeetingRooms.panel.Calendar = function(config) {
 		,id: 'CalendarWrapper'
 		,tbar: [{
 			text: _('MeetingRooms.requests_create')
+			,listeners: {
+				'click': {fn: this.addRequest, scope: this}
+			}
 			
 		},'-',{
 			xtype: 'datefield'
@@ -65,7 +68,20 @@ MeetingRooms.panel.Calendar = function(config) {
 	});
 }
 Ext.extend(MeetingRooms.panel.Calendar, MODx.Panel, {	
-	clearSearch: function() {
+	addRequest: function() {
+		if (!this.createRequestWindow) {
+			this.createRequestWindow = MODx.load({
+				xtype: 'MeetingRooms-window-request-create' 
+				,blankValues: false
+				,listeners: {
+					'success': {fn: MeetingRooms.panel.Calendar.getRequests, scope:this}
+				}
+			});
+		}
+		this.createRequestWindow.show(event.target);
+		return true;
+	}
+	,clearSearch: function() {
 		Ext.getCmp('calendar-date').setValue(new Date().format('m/01/Y'));
 		Ext.getCmp('Calendar-Room-Select').setValue('');
 		Ext.getCmp('Calendar-search-filter').setValue('');
