@@ -295,6 +295,7 @@ MeetingRooms.window.UpdateRequest = function(config) {
 		//*/
 		var startdateString = this.config.record.start.split(" ")[0];
 		this.findByType('datefield')[0].setValue(startdateString);
+		this.findByType('MeetingRooms-combo-mrRooms')[0].setValue(this.config.record.room);
 		return true; 
 	});
 	
