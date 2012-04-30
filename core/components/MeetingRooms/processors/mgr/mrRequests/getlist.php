@@ -46,9 +46,16 @@ if (!empty($query)) {
 
 
 if (!empty($room)) {
-	$c->where(array(
-		'room:=' => $room
-	), xPDOQuery::SQL_AND);
+	if ($room != '3' && $room != '4') {
+		$c->where(array(
+			'room:=' => $room
+		), xPDOQuery::SQL_AND);
+	} else {
+		$c->where(array(
+			'room:=' => 3,
+			'OR:room:=' => 4,
+		), xPDOQuery::SQL_AND);
+	}
 }
 if (!empty($date)) {
 	$c->where(array(
