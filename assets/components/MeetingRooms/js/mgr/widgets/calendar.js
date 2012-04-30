@@ -37,24 +37,6 @@ MeetingRooms.panel.Calendar = function(config) {
 				
 			}
 		},{
-			xtype: 'textfield'
-			,id: 'Calendar-search-filter'
-			,emptyText: _('MeetingRooms.search...')
-			,listeners: {
-				'change': {fn: this.search, scope:this}
-				,'render': {fn: function(cmp) {
-					new Ext.KeyMap(cmp.getEl(), {
-						key: Ext.EventObject.ENTER
-						,fn: function() {
-							this.fireEvent('change',this);
-							this.blur();
-							return true;
-						}
-						,scope: cmp
-					});
-				}, scope:this}
-			}			
-		},{
 			text: 'Clear Search'
 			,listeners: {
 				'click': {fn: this.clearSearch, scope:this}
@@ -88,7 +70,7 @@ Ext.extend(MeetingRooms.panel.Calendar, MODx.Panel, {
 	,clearSearch: function() {
 		Ext.getCmp('calendar-date').setValue(new Date().format('m/01/Y'));
 		Ext.getCmp('Calendar-Room-Select').setValue('');
-		Ext.getCmp('Calendar-search-filter').setValue('');
+		//Ext.getCmp('Calendar-search-filter').setValue('');
 		this.getRequests();
 		return true;
 	}
@@ -174,7 +156,10 @@ Ext.extend(MeetingRooms.panel.Calendar, MODx.Panel, {
 		Ext.getCmp('CalendarWrapper').doLayout();
 		//finish getting search criteria
 		var room = Ext.getCmp('Calendar-Room-Select').getValue();
+		/*
 		var search = Ext.getCmp('Calendar-search-filter').getValue();
+		//*/
+		var search = '';
 		setTimeout(
 		function() {
 		
