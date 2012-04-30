@@ -178,9 +178,19 @@ Ext.extend(MeetingRooms.panel.Calendar, MODx.Panel, {
 					MeetingRooms.calendarRecords = new Array();
 					for ( request in requests.results) {
 						requestData = requests.results[request];
-						requestStart = new Date(requestData.start.split(" ")[0]);
+						//requestStartDate = new Date(requestData.start.split(" ")[0]);
+						requestStartDateString = requestData.start.split(" ")[0];
+						requestStartDateYear = requestStartDateString.split("-")[0];
+						requestStartDateMonth = requestStartDateString.split("-")[1];
+						requestStartDateDate = requestStartDateString.split("-")[2];
+						requestStartDate = new Date();
+						requestStartDate.setMonth(requestStartDateMonth - 1);
+						requestStartDate.setFullYear(requestStartDateYear);
+						requestStartDate.setDate(requestStartDateDate);
+						requestStartTimeString = requestData.start.split(" ")[1];
+						
 						requestEnd = new Date(requestData.end);
-						id = requestStart.format('Y-m-d');
+						id = requestStartDate.format('Y-m-d');
 						$day = Ext.getCmp(id);
 						mystring = requestData.start.split(" ")[1]+" - "+requestData.room_name;
 						var tempPanel = {
