@@ -32,6 +32,10 @@ MeetingRooms.panel.Calendar = function(config) {
 			,fieldLabel: _('MeetingRooms.name')
 			,hideLabel: false
 			,id: 'Calendar-Room-Select'
+			,listeners: {
+				'select': {fn: this.getRequests, scope: this}
+				
+			}
 		},{
 			xtype: 'textfield'
 			,id: 'Calendar-search-filter'
