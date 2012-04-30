@@ -200,8 +200,10 @@ Ext.extend(MeetingRooms.panel.Calendar, MODx.Panel, {
 					}
 					delete MeetingRooms.calendarRecords;
 					MeetingRooms.calendarRecords = new Array();
-					for ( request in requests.results) {
-						requestData = requests.results[request];
+					var i = 0;
+					while (i < requests.total) {
+					
+						requestData = requests.results[i];
 						//requestStartDate = new Date(requestData.start.split(" ")[0]);
 						requestStartDateString = requestData.start.split(" ")[0];
 						requestStartDateYear = requestStartDateString.split("-")[0];
@@ -250,6 +252,7 @@ Ext.extend(MeetingRooms.panel.Calendar, MODx.Panel, {
 						$day.add(tempPanel);
 						$day.doLayout();
 						MeetingRooms.calendarRecords[requestData.id] = requestData;
+						i++;
 						
 					}
 					
