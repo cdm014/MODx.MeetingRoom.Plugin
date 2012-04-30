@@ -13,10 +13,7 @@ MeetingRooms.panel.Calendar = function(config) {
 		,id: 'CalendarWrapper'
 		,tbar: [{
 			text: _('MeetingRooms.requests_create')
-			//blankValues is false so that previous data is recomended
-			//since I can't work out how to let them select multiple dates this
-			//is the best compromise
-			,handler: { xtype: 'MeetingRooms-window-request-create',blankValues: false}
+			
 		},'-',{
 			xtype: 'datefield'
 			,id: 'calendar-date'
@@ -68,7 +65,14 @@ MeetingRooms.panel.Calendar = function(config) {
 	});
 }
 Ext.extend(MeetingRooms.panel.Calendar, MODx.Panel, {	
-	getRequests: function () {
+	clearSearch: function() {
+		Ext.getCmp('calendar-date').setValue(new Date().format('m/01/Y'));
+		Ext.getCmp('Calendar-Room-Select').setValue('');
+		Ext.getCmp('Calendar-search-filter').setValue('');
+		this.getRequests();
+		return true;
+	}
+	,getRequests: function () {
 		//destroy the old calendar
 		if (Ext.getCmp('RequestCalendar')) {
 			Ext.getCmp('RequestCalendar').destroy();

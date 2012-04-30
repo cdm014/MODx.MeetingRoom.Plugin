@@ -6,7 +6,7 @@
 /***********************
 	1.	Calendar.js
 			a. 	Hook Add a New Request button up to form
-			b. Handler for clear Search button
+			DONE	b. Handler for clear Search button
 			c. 	Handler for Meetingroom dropdown in Calendar Wrapper
 			d. 	Figure out way to destroy Requests from Calendar
 	2.	Figure out recurring requests
