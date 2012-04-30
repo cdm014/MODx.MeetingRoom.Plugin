@@ -154,9 +154,11 @@ Ext.extend(MeetingRooms.grid.Requests, MODx.grid.Grid,{
 		return true;
 	}
 	,updateRequest: function(btn,e) {
+		
 		if(!this.updateRequestWindow) {
 			this.updateRequestWindow = MODx.load({
 				xtype: 'MeetingRooms-window-mrRequests-update'
+				
 				,record: this.menu.record
 				,listeners: {
 					'success': {fn:this.refresh,scope:this}
@@ -164,6 +166,7 @@ Ext.extend(MeetingRooms.grid.Requests, MODx.grid.Grid,{
 			});
 		} else {
 			this.updateRequestWindow.setValues(this.menu.record);
+			this.updateRequestWindow.config.record = this.menu.record;
 		}
 		this.updateRequestWindow.show(e.target);
 	}
@@ -274,7 +277,16 @@ MeetingRooms.window.UpdateRequest = function(config) {
 	});
 	MeetingRooms.window.UpdateRequest.superclass.constructor.call(this,config);
 	this.on("beforeshow", function () { 
-		//this.pullResources();
+		//*
+		//update time, date, and room fields
+		
+		var starttime = this.config.record.start.split(" ")[1].split(":")[0]+":"+this.config.record.start.split(" ")[1].split(":")[1];
+		var endtime = this.config.record.end.split(" ")[1].split(":")[0]+":"+this.config.record.end.split(" ")[1].split(":")[1];
+		this.findByType('timefield')[0].setValue(starttime).update();
+		this.findByType('timefield')[1].setValue(endtime);
+		//*/
+		var startdateString = this.config.record.start.split(" ")[0];
+		this.findByType('datefield')[0].setValue(startdateString);
 		return true; 
 	});
 	
