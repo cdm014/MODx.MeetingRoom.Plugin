@@ -203,19 +203,20 @@ Ext.extend(MeetingRooms.panel.Calendar, MODx.Panel, {
 								var myId = this.getId();
 								var requestId = myId.split("-")[1];
 								var record = MeetingRooms.calendarRecords[requestId];
-								if(!this.updateRequestWindow) {
-									this.updateRequestWindow = MODx.load({
+								if(!MeetingRooms.panel.Calendar.updateRequestWindow) {
+									MeetingRooms.panel.Calendar.updateRequestWindow = MODx.load({
 										xtype: 'MeetingRooms-window-mrRequests-update'
-										,id: 'calendar-update-Window'
+										
 										,record: record
 										,listeners: {
 											'success': {fn: MeetingRooms.panel.Calendar.getRequests, scope:this}
 										}
 									});
 								} else {
-									this.updateRequestWindow.setValues(record);
+									MeetingRooms.panel.Calendar.updateRequestWindow.setValues(record);
+									MeetingRooms.panel.Calendar.updateRequestWindow.config.record = record;
 								}
-								this.updateRequestWindow.show(event.target);
+								MeetingRooms.panel.Calendar.updateRequestWindow.show(event.target);
 							}
 							
 							
