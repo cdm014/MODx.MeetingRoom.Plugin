@@ -202,7 +202,7 @@ Ext.extend(MeetingRooms.panel.Calendar, MODx.Panel, {
 						
 						requestEnd = new Date(requestData.end);
 						id = requestStartDate.format('Y-m-d');
-						$day = Ext.getCmp(id);
+						day = Ext.getCmp(id);
 						mystring = requestData.start.split(" ")[1]+" - "+requestData.room_name;
 						var tempPanel = {
 							xtype: 'button',
@@ -233,9 +233,10 @@ Ext.extend(MeetingRooms.panel.Calendar, MODx.Panel, {
 							
 						};
 						
-						
-						$day.add(tempPanel);
-						$day.doLayout();
+						if (day) {
+							day.add(tempPanel);
+							day.doLayout();
+						}
 						MeetingRooms.calendarRecords[requestData.id] = requestData;
 						i++;
 						

@@ -41,6 +41,10 @@
 		<field key="requestNumber" dbtype="varchar" precision="30" phptype="string" null="false" default="" />
 		<field key="room" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
 		<field key="status" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+		<field key="notes" dbtype="text" phptype="string" null="true" />
+		<field key="adults" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true" default="0" />
+		<field key="children" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true" default="0" />
+		<field key="teens" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true" default="0" />
 		<index alias="libraryCard" name="libraryCard" primary="false" unique="false" type="BTREE">
 			<column key="libraryCard" collation="A" null="false" />
 		</index>
