@@ -19,6 +19,10 @@ $xpdo_meta_map['mrRequests']= array (
     'requestNumber' => '',
     'room' => 0,
     'status' => 0,
+    'notes' => NULL,
+    'adults' => 0,
+    'children' => 0,
+    'teens' => 0,
   ),
   'fieldMeta' => 
   array (
@@ -105,6 +109,39 @@ $xpdo_meta_map['mrRequests']= array (
       'attributes' => 'unsigned',
       'phptype' => 'integer',
       'null' => false,
+      'default' => 0,
+    ),
+    'notes' => 
+    array (
+      'dbtype' => 'text',
+      'phptype' => 'string',
+      'null' => true,
+    ),
+    'adults' => 
+    array (
+      'dbtype' => 'int',
+      'precision' => '10',
+      'attributes' => 'unsigned',
+      'phptype' => 'integer',
+      'null' => true,
+      'default' => 0,
+    ),
+    'children' => 
+    array (
+      'dbtype' => 'int',
+      'precision' => '10',
+      'attributes' => 'unsigned',
+      'phptype' => 'integer',
+      'null' => true,
+      'default' => 0,
+    ),
+    'teens' => 
+    array (
+      'dbtype' => 'int',
+      'precision' => '10',
+      'attributes' => 'unsigned',
+      'phptype' => 'integer',
+      'null' => true,
       'default' => 0,
     ),
   ),

@@ -24,6 +24,6 @@
 			} else {
 				$viewOutput = 'Controller not found: '.$f;
 			}
-			return $viewHeader.$viewOutput;
+			return $viewHeader.$viewOutput.'<p>Action: '.$this->action.'.php</p>';
 		}
 	}
