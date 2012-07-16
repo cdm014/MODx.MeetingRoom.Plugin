@@ -7,7 +7,7 @@ MeetingRooms.grid.Requests = function(config) {
 		id: 'MeetingRooms-grid-Requests'
 		,url: MeetingRooms.config.connectorUrl
 		,baseParams: { 
-			action: 'mgr/mrRequests/getlist'
+			action: 'mgr/mrRequests/getlist' 
 			,date: new Date()
 		}
 		,fields: ['id','name','libraryCard','email','phone','group','meetingType','start','end','requestNumber','room','room_name','status']
@@ -166,7 +166,7 @@ Ext.extend(MeetingRooms.grid.Requests, MODx.grid.Grid,{
 		if(!this.updateRequestWindow) {
 			this.updateRequestWindow = MODx.load({
 				xtype: 'MeetingRooms-window-mrRequests-update'
-				
+
 				,record: this.menu.record
 				,listeners: {
 					'success': {fn:this.refresh,scope:this}
@@ -263,7 +263,7 @@ MeetingRooms.window.UpdateRequest = function(config) {
 			,name: 'requestNumber'
 		},{
 			xtype: 'MeetingRooms-combo-mrRooms'
-			,id: 'update-request-room-combo'
+			,id: this.getId()+'-combo-mrRooms'
 			,listeners: {
 				'select': {fn: this.roomChange,scope:this}
 			}
@@ -295,6 +295,7 @@ MeetingRooms.window.UpdateRequest = function(config) {
 		//*/
 		var startdateString = this.config.record.start.split(" ")[0];
 		this.findByType('datefield')[0].setValue(startdateString);
+		this.findByType('MeetingRooms-combo-mrRooms')[0].setValue(this.config.record.room);
 		return true; 
 	});
 	

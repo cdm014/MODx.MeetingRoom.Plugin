@@ -10,6 +10,7 @@ $dir = $modx->getOption('dir',$scriptProperties,'ASC');
 $query = $modx->getOption('query',$scriptProperties,'');
 $room = $modx->getOption('room',$scriptProperties,'');
 $date = $modx->getOption('date',$scriptProperties, '');
+$end = $modx->getOption('end', $scriptProperties,null);
 function debug_msg($array) {
 	return '<pre>'.print_r($array,true).'</pre>';
 }
@@ -45,16 +46,31 @@ if (!empty($query)) {
 
 
 if (!empty($room)) {
-	$c->where(array(
-		'room:=' => $room
-	), xPDOQuery::SQL_AND);
+	if ($room != '3' && $room != '4') {
+		$c->where(array(
+			'room:=' => $room
+		), xPDOQuery::SQL_AND);
+	} else {
+		$c->where(array(
+			'room:=' => 3,
+			'OR:room:=' => 4,
+		), xPDOQuery::SQL_AND);
+	}
 }
 if (!empty($date)) {
 	$c->where(array(
 		'start:>=' => $date
 	), xPDOQuery::SQL_AND);
 }
-$count = $modx->getCount('mrRequess',$c);
+//*
+if (!empty($end) && $end != null) {
+	$c->where(array(
+		'end:>=' => $end
+	), xPDOQuery::SQL_AND);
+}
+
+//*/
+$count = $modx->getCount('mrRequests',$c);
 $c->sortby($sort,$dir);
 
 if ($isLimit) $c->limit($limit,$start);
