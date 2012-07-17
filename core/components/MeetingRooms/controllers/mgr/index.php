@@ -19,6 +19,7 @@ $modx->regClientStartupScript($mrManager->config['jsUrl'].'mgr/widgets/calendar.
 $modx->regClientCSS($mrManager->config['cssUrl'].'mgr/mgr.css');
 
 $modx->regClientStartupScript($mrManager->config['jsUrl'].'mgr/sections/index.js');
+$modx->regClientStartupScript($mrManager->config['jsUrl'].'mgr/widgets/past_requests.js');
 $output = '';
 /*
  * We're going to load first the MeetingRooms.grid.js which is a widget that displays a 

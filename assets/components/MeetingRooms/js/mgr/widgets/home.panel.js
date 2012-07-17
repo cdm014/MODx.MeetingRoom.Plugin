@@ -66,6 +66,13 @@ MeetingRooms.panel.Home = function(config) {
 					xtype: 'MeetingRooms-grid-Requests'
 					,preventRender: true
 				}]
+			},{
+				title: 'Past Requests'
+				,defaults: {autoHeight: true}
+				,items: [{
+					xtype: 'MeetingRooms-grid-PastRequests'
+					,preventRender: true
+				}]
 			}]
 		}]
 	});

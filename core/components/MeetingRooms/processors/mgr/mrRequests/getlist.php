@@ -11,6 +11,8 @@ $query = $modx->getOption('query',$scriptProperties,'');
 $room = $modx->getOption('room',$scriptProperties,'');
 $date = $modx->getOption('date',$scriptProperties, '');
 $end = $modx->getOption('end', $scriptProperties,null);
+
+$beforedate = $modx->getOption('beforedate',$scriptProperties, '');
 function debug_msg($array) {
 	return '<pre>'.print_r($array,true).'</pre>';
 }
@@ -62,6 +64,12 @@ if (!empty($date)) {
 		'start:>=' => $date
 	), xPDOQuery::SQL_AND);
 }
+if (!empty($beforedate)) {
+	$c->where(array(
+		'start:<=' => $beforedate
+	), xPDOQuery::SQL_AND);
+}
+
 //*
 if (!empty($end) && $end != null) {
 	$c->where(array(
