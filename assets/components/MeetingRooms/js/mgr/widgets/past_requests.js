@@ -133,8 +133,21 @@ Ext.extend(MeetingRooms.grid.PastRequests, MODx.grid.Grid,{
 		}
 		this.updatePastRequestWindow.show(e.target);
 	}
+	,removeRequest: function() {
+		MODx.msg.confirm({
+			title: _('MeetingRooms.request_remove')
+			,text: _('MeetingRooms.request_remove_confirm')
+			,url: this.config.url
+			,params: {
+				action: 'mgr/mrRequests/remove'
+				,id: this.menu.record.id
+			}
+			,listeners: {
+				'success': {fn: this.refresh, scope:this}
+			}
+		});
+	}
 });
-
 
 //Actually Register the class
 Ext.reg('MeetingRooms-grid-PastRequests', MeetingRooms.grid.PastRequests);
