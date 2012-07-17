@@ -151,4 +151,65 @@ Ext.extend(MeetingRooms.grid.PastRequests, MODx.grid.Grid,{
 
 //Actually Register the class
 Ext.reg('MeetingRooms-grid-PastRequests', MeetingRooms.grid.PastRequests);
-		
+
+MeetingRooms.window.UpdatePastRequest = function(config) {
+	config = config || {};
+	this.config = config;
+	textvar = '<pre>'+this.config+'</pre>';
+	Ext.applyIf(config,{
+		title: _('MeetingRooms.request_update')
+		,id: 'UpdatePastRequestWindow'
+		,text: textvar
+		,url: MeetingRooms.config.connectorUrl
+		,baseParams: {
+			action: 'mgr/mrRequests/update'
+		}
+		,fields: [{
+			xtype: 'hidden'
+			,id: 'requestId'
+			,name: 'id'
+		},{
+			xtype: 'textfield'
+			,name: 'name'
+			,fieldLabel: _('MeetingRooms.request_name')
+			,width: 300
+		},{
+			xtype: 'textfield'
+			,name: 'group'
+			,fieldLabel: _('MeetingRooms.request_group')
+			,width: 300
+		},{
+			xtype: 'datefield'
+			,name: 'startDate'
+			,fieldLabel: _('MeetingRooms.request_start_date')
+			,value: this.config.record.start.split(" ",1)[0]
+			,format: 'Y-m-d'
+		},{
+			xtype: 'textarea'
+			,name: 'notes'
+			,fieldLabel: 'Notes'
+		},{
+			xtype: 'textfield'
+			,name: 'adults'
+			,fieldLabel: 'Adults'
+		},{
+			xtype: 'textfield'
+			,name: 'teens'
+			,fieldLabel: 'Teens'
+		},{
+			xtype: 'textfield'
+			,name: 'children'
+			,fieldLabel: 'Children'
+		}]
+	});
+	MeetingRooms.window.UpdatePastRequest.superclass.constructor.call(this,config);
+	this.on("beforeshow",function() {
+		var startdateString = this.config.record.start.split(" ")[0];
+		this.findByType('datefield')[0].setValue(startdateString);
+		return true;
+	});
+};
+//This window shouldn't need any extra functions since they can't change the room or the resources requested
+Ext.extend(MeetingRooms.window.UpdatePastRequest, MODx.Window);
+
+Ext.reg('MeetingRooms-window-mrRequests-updatePast', MeetingRooms.window.UpdatePastRequest);

@@ -22,13 +22,15 @@ try {
 
 //return $modx->error->failure($scriptProperties['date'] = $date->format("Y-m-d h:i:s"));
 //*/
-$startString = $scriptProperties['startDate']." ".$scriptProperties['startTime'];
-$endString = $scriptProperties['startDate']." ".$scriptProperties['endTime'];
-$start = DateTime::createFromFormat('Y-m-d h:i A', $startString);
-$end = DateTime::createFromFormat('Y-m-d h:i A', $endString);
+if (!empty($scriptProperties['startTime']) && !empty($scriptProperties['endTime'])) {
+	$startString = $scriptProperties['startDate']." ".$scriptProperties['startTime'];
+	$endString = $scriptProperties['startDate']." ".$scriptProperties['endTime'];
+	$start = DateTime::createFromFormat('Y-m-d h:i A', $startString);
+	$end = DateTime::createFromFormat('Y-m-d h:i A', $endString);
 
-$scriptProperties['start'] = $start->format('Y-m-d H:i:s');
-$scriptProperties['end'] = $end->format('Y-m-d H:i:s');
+	$scriptProperties['start'] = $start->format('Y-m-d H:i:s');
+	$scriptProperties['end'] = $end->format('Y-m-d H:i:s');
+}
 if (empty($mrRequest)) return $modx->error->failure($modx->lexicon('MeetingRooms.request_err_nf'));
 
 //save request data
