@@ -8,6 +8,7 @@ MeetingRooms.panel.Calendar = function(config) {
 		
 		,defaults: {
 			bodyStyle: 'padding:20px'
+			
 		}
 		,width: 900
 		,id: 'CalendarWrapper'
@@ -21,6 +22,8 @@ MeetingRooms.panel.Calendar = function(config) {
 			xtype: 'datefield'
 			,id: 'calendar-date'
 			,name: 'date'
+			,boxMinWidth:200
+			,width:200
 			,fieldLabel: _('MeetingRooms.requests_start')
 			,hideLabel: false
 			,value: new Date()

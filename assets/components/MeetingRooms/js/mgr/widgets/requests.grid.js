@@ -263,14 +263,15 @@ MeetingRooms.window.UpdateRequest = function(config) {
 			,name: 'requestNumber'
 		},{
 			xtype: 'MeetingRooms-combo-mrRooms'
-			,id: this.getId()+'-combo-mrRooms'
+			,id: this.config.record.id+'-combo-mrRooms'
 			,listeners: {
 				'select': {fn: this.roomChange,scope:this}
 			}
 			
 		},{
 			xtype: 'meetingrooms-combo-requeststatus'
-			,value: this.config.record.status
+			,id: this.config.record.id+'-combo-status'
+			,hiddenValue: this.config.record.status
 		},{
 			xtype: 'fieldset'
 			,id: 'update-requestedresources'
@@ -293,11 +294,13 @@ MeetingRooms.window.UpdateRequest = function(config) {
 		this.findByType('timefield')[0].setValue(starttime).update();
 		this.findByType('timefield')[1].setValue(endtime);
 		//*/
+		
 		var startdateString = this.config.record.start.split(" ")[0];
 		this.findByType('datefield')[0].setValue(startdateString);
 		this.findByType('MeetingRooms-combo-mrRooms')[0].setValue(this.config.record.room);
 		return true; 
 	});
+
 	
 };
 Ext.extend(MeetingRooms.window.UpdateRequest, MODx.Window,{
@@ -318,7 +321,7 @@ Ext.extend(MeetingRooms.window.UpdateRequest, MODx.Window,{
 		//*/
 		//alert('before ajax');
 	// add fields to new container
-		var room = Ext.getCmp('update-request-room-combo').getValue();
+		var room = Ext.getCmp(this.config.record.id+'-combo-mrRooms').getValue();
 		Ext.Ajax.request({
 			url: MeetingRooms.config.connectorUrl
 			,params: {

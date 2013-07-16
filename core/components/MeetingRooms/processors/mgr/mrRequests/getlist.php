@@ -48,14 +48,14 @@ if (!empty($query)) {
 
 
 if (!empty($room)) {
-	if ($room != '3' && $room != '4') {
+	if ($room != '1' && $room != '2') {
 		$c->where(array(
 			'room:=' => $room
 		), xPDOQuery::SQL_AND);
 	} else {
 		$c->where(array(
-			'room:=' => 3,
-			'OR:room:=' => 4,
+			'room:=' => 1,
+			'OR:room:=' => 1,
 		), xPDOQuery::SQL_AND);
 	}
 }

@@ -21,10 +21,15 @@ MeetingRooms.grid.PastRequests = function(config) {
 			,sortable: true
 			,width: 20
 		},{
+			header: _('MeetingRooms.name')
+			,dataIndex: 'room_name'
+			,sortable: true
+			,width: 100
+		},{
 			header: _('MeetingRooms.request_start')
 			,dataIndex: 'start'
 			,sortable: true
-			,width: 100
+			,width: 80
 		},{
 			header: _('MeetingRooms.request_name')
 			,dataIndex: 'name'
@@ -44,7 +49,7 @@ MeetingRooms.grid.PastRequests = function(config) {
 			header: 'children'
 			,dataIndex: 'children'
 			,sortable: false
-			,width: 30
+			,width: 60
 		}]
 		,tbar: [{
 			xtype: 'label'
@@ -188,6 +193,8 @@ MeetingRooms.window.UpdatePastRequest = function(config) {
 			xtype: 'textarea'
 			,name: 'notes'
 			,fieldLabel: 'Notes'
+			
+			,width: 300
 		},{
 			xtype: 'textfield'
 			,name: 'adults'
@@ -200,6 +207,7 @@ MeetingRooms.window.UpdatePastRequest = function(config) {
 			xtype: 'textfield'
 			,name: 'children'
 			,fieldLabel: 'Children'
+			
 		}]
 	});
 	MeetingRooms.window.UpdatePastRequest.superclass.constructor.call(this,config);

@@ -29,7 +29,7 @@ $(document).ready(function() {
 			$("#roomTable").remove();
 			$("#requestdiv").prepend('<h1>Available Meeting Rooms</h1><table id="roomTable"></table>');
 			
-			$("#roomTable").html('<thead><tr><th>Room Name</th><th>Address</th><th>Description</th></tr></thead>');
+			$("#roomTable").html('<thead><tr><th>Room Name</th><th style="min-width:20ex">Address</th><th>Description</th></tr></thead>');
 			
 			
 			for (x in data) {

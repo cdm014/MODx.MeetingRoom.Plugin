@@ -4,7 +4,7 @@ MeetingRooms.grid.MeetingRooms = function(config) {
 		id: 'MeetingRooms-grid-MeetingRooms'
 		,url: MeetingRooms.config.connectorUrl
 		,baseParams: { action: 'mgr/mrRooms/getList'}
-		,fields: ['id', 'name','address','menu']
+		,fields: ['id', 'name','address','menu','description']
 		,paging: true
 		,remoteSort: true
 		,anchor: '97%'
@@ -131,15 +131,16 @@ MeetingRooms.window.UpdateRoom = function(config) {
             ,width: 300
         },{
 
-			xtype: 'htmleditor'
-			,fieldLabel: _('MeetingRooms.room_description')
-			,name: 'description'
-			,width: 300
+			 xtype: 'htmleditor'
 			,enableFont: false
 			,enableColors: false
 			,enableAlignments: false
 			,enableFontSize: false
 			,enableLinks: false
+			
+            ,fieldLabel: _('MeetingRooms.room_description')
+            ,name: 'description'
+            ,width: 300
 		}]
 		
 
